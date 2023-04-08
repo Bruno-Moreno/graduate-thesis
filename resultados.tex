@@ -87,21 +87,21 @@ Normalizando por la proporción de ejemplos en cada clase con respecto al total,
 
 Con lo anterior y dado que nuestro objetivo es utilizar un DPP centrado en una métrica que distinga las clases y samplee con mayor probabilidad a las clase minoritarias, se valida el uso de \textit{Oneshot} y \textit{Autoencoder} como las métricas que se usarán en las siguientes secciones. Se propone como trabajo futuro la búsqueda de métricas que no dependan del entrenamiento de un red para realizar esta tarea y que tengan efectos similares a los presentados (por ejemplo, la distancia fraccional).  
 
-\section{Fast DPP}
+\section{Fast DPP}\label{section:fast_dpp_experiment}
 
 El algoritmo propuesto en Algoritmo \ref{alg:alg4} se fundamenta en las primeras iteraciones del entrenamiento de una red neuronal. Para problemas de clasificación de baja dimensionalidad y una cantidad acotada de clases, la región de decisión se logra aproximar en unas cuantas iteraciones, mientras que para otros problemas más complejos, esto ocurrirá después. 
 
 \begin{images}[\label{fig:baseline_it_n}]{\centering Primeras iteraciones SGD en el problema de clasificación binaria. Las zonas de color celeste y anaranjado delimitan la región de decisión del problema.}
-    \addimage{img/tesis/resultados/baseline_it_1.png}{width=4cm}{Iteración 1}
-    \addimage{img/tesis/resultados/baseline_it_2.png}{width=4cm}{Iteración 2}
-    \addimage{img/tesis/resultados/baseline_it_3.png}{width=4cm}{Iteración 3}
+    \addimage{img/tesis/resultados/baseline_it_1.png}{width=4cm}{Iteración 1.}
+    \addimage{img/tesis/resultados/baseline_it_2.png}{width=4cm}{Iteración 2.}
+    \addimage{img/tesis/resultados/baseline_it_3.png}{width=4cm}{Iteración 3.}
 
 \end{images}
 
 \begin{images}[\label{fig:dpp_it_n}]{\centering Primeras iteraciones Fast DPP en el problema de clasificación binaria. Las zonas de color celeste y anaranjado delimitan la región de decisión del problema.}
-    \addimage{img/tesis/resultados/dpp_it_1.png}{width=4cm}{Iteración 1}
-    \addimage{img/tesis/resultados/dpp_it_2.png}{width=4cm}{Iteración 2}
-    \addimage{img/tesis/resultados/dpp_it_3.png}{width=4cm}{Iteración 3}
+    \addimage{img/tesis/resultados/dpp_it_1.png}{width=4cm}{Iteración 1.}
+    \addimage{img/tesis/resultados/dpp_it_2.png}{width=4cm}{Iteración 2.}
+    \addimage{img/tesis/resultados/dpp_it_3.png}{width=4cm}{Iteración 3.}
 
 \end{images}
 
@@ -109,8 +109,8 @@ El algoritmo propuesto en Algoritmo \ref{alg:alg4} se fundamenta en las primeras
 Las Figuras \ref{fig:baseline_it_n} y \ref{fig:dpp_it_n} muestran las primeras 3 iteraciones del entrenamiento de una red neuronal que resuelve el problema de clasificación binaria en 2 dimensiones. Al igual que en la sección anterior, es posible notar que la selección de un \textit{batch} mediante el uso de un DPP (Figura \ref{fig:dpp_it_n}) tiene una mayor proporción de la clase minoritaria en comparación a la selección uniforme (Figura \ref{fig:baseline_it_n}). En consecuencia, la región de decisión luego de 3 iteraciones es mejor en Figura \ref{fig:dpp_it_n} (c) pues clasifica correctamente más ejemplos de la clase minoritaria (clase 0) y mantiene los correctamente clasificados de la clase mayoritaria (clase 1). 
 
 \begin{images}[\label{fig:ambas_it_n}]{\centering Última iteración de las metodologías SGD y DPP si no se descartan ejemplos como lo propone Fast DPP.}
-    \addimage{img/tesis/resultados/baseline_it_n.png}{width=6cm}{Última iteración SGD}
-    \addimage{img/tesis/resultados/dpp_it_n.png}{width=6cm}{Última iteración DPP}
+    \addimage{img/tesis/resultados/baseline_it_n.png}{width=6cm}{Última iteración SGD.}
+    \addimage{img/tesis/resultados/dpp_it_n.png}{width=6cm}{Última iteración DPP.}
 
 \end{images}
 
@@ -120,44 +120,45 @@ Si no descartamos ejemplos como lo propone \textit{Fast DPP}, es decir, descarta
 
 Lo anterior justifica la utilización del algoritmo \textit{Fast DPP} que hace uso de la capacidad del DPP para samplear ejemplos diversos durante las primeras iteraciones de cada época (alcanzando así una ``buena'' región de decisión) sin la necesidad de mirar el resto de ejemplos, acelerando así el entrenamiento. 
 
-\begin{images}[\label{fig:2d_fast_dpp}]{\centering Resultados Fast DPP en dataset clasificación binaria (30 iteraciones), M = 100.}
-    \addimage{img/tesis/resultados/loss_2d_fast.jpg}{width=7cm}{Train loss según época}
-    \addimage{img/tesis/resultados/val_loss_2d_fast.jpg}{width=7cm}{Val loss según época}
-    \addimage{img/tesis/resultados/2d_fast_time.jpg}{width=7cm}{Val loss según tiempo}
+\begin{images}[\label{fig:2d_fast_dpp}]{\centering Comparación de resultados de las metodologías Baseline y DPP según la métrica de \textit{loss} en el dataset de clasificación binaria promediando 30 iteraciones del experimento y $M=100$.}
+    \addimage{img/tesis/resultados/loss_2d_fast.jpg}{width=7cm}{Train loss según época de entrenamiento.}
+    \addimage{img/tesis/resultados/val_loss_2d_fast.jpg}{width=7cm}{Validation loss según época de entrenamiento.}
+    \addimage{img/tesis/resultados/2d_fast_time.jpg}{width=7cm}{Validation loss según tiempo de entrenamiento.}
 
 \end{images}
 
-Con respecto al entrenamiento en 10 épocas con un tamaño de sampling inicial $M = 100$ (es decir, descartando $M-k = 100-64 = 36$ ejemplos en cada iteración con $k$ el tamaño del \textit{batch}), según la Figura \ref{fig:2d_fast_dpp} (a) y (b), es claro que el método \textit{baseline} es superior durante todo el entrenamiento al método \textit{Fast DPP} según la métrica de \textit{loss}. Lo anterior es un resultado esperable de un algoritmo que no mira todos los ejemplos pues su función es la de acelerar el entrenamiento, lamentablemente, esto tampoco es logrado como lo muestra (c) pues la arquitectura de la red es poco profunda y los datos con los que trabaja de baja dimensionalidad (y en consecuencia, de bajo coste de procesamiento), por lo que el costo base de utilizar un DPP es superior a la de usar todos los datos para el entrenamiento.  
+Con respecto al entrenamiento en 10 épocas con un tamaño de sampling inicial $M = 100$ (es decir, descartando $M-k = 100-64 = 36$ ejemplos en cada iteración con $k$ el tamaño del \textit{batch}), según la Figura \ref{fig:2d_fast_dpp} (a) y (b), es claro que el método \textit{baseline} es superior durante todo el entrenamiento al método \textit{Fast DPP} según la métrica de \textit{loss}. Lo anterior es un resultado esperable de un algoritmo que no mira todos los ejemplos pues su función es la de acelerar el entrenamiento, lamentablemente, esto tampoco es logrado como lo muestra (c) pues la arquitectura de la red es poco profunda y los datos con los que trabaja de baja dimensionalidad. En consecuencia, el costo base de utilizar un DPP es superior a la de usar todos los datos para el entrenamiento.  
 
 \vspace{0.2cm}
 
 Cuando esto es aplicado sobre un conjunto de mayor complejidad como \textit{Fashion MNIST} donde el costo por iteración es más elevado (por la profundidad de la red y la dimensión de los datos), es cuando se puede apreciar la intención detrás de \textit{Fast DPP}.
 
-\begin{images}[\label{fig:nd_fast_dpp}]{\centering Resultados Fast DPP en dataset clasificación multiclase (5 iteraciones), M = 400.}
-    \addimage{img/tesis/resultados/loss_nd_fast.jpg}{width=7cm}{Train loss según época}
-    \addimage{img/tesis/resultados/val_loss_nd_fast.jpg}{width=7cm}{Val loss según época}
-    \addimage{img/tesis/resultados/time_nd_fast.jpg}{width=7cm}{Val loss según tiempo}
+\begin{images}[\label{fig:nd_fast_dpp}]{\centering Comparación de resultados de las metodologías Baseline y DPP según la métrica de \textit{loss} en el dataset de clasificación multiclase promediando 5 iteraciones del experimento y $M=400$.}
+    \addimage{img/tesis/resultados/loss_nd_fast.jpg}{width=7cm}{Train loss según época de entrenamiento. }
+    \addimage{img/tesis/resultados/val_loss_nd_fast.jpg}{width=7cm}{Validation loss según época de entrenamiento. }
+    \addimage{img/tesis/resultados/time_nd_fast.jpg}{width=7cm}{Validation loss según tiempo de entrenamiento. }
 
 \end{images}
 
-Como se puede notar en Figura \ref{fig:nd_fast_dpp} (a) y (b), el \textit{performance} del modelo \textit{baseline} es superior durante todas las épocas de entrenamiento lo que es de esperar dada la cantidad de ejemplos con los que entrena. Además, el rendimiento en \textit{Train Loss} es superior para la métrica \textit{Autoencoder} (curva naranja) en comparación a la métrica \textit{Oneshot} (curva verde) pero similares en \textit{Val Loss}.
+Como se puede notar en Figura \ref{fig:nd_fast_dpp} (a) y (b), el rendimiento del modelo \textit{baseline} es superior durante todas las épocas de entrenamiento lo que es de esperar dada la cantidad de ejemplos con los que entrena. Además, el rendimiento en \textit{Train Loss} es superior para la métrica \textit{Autoencoder} (curva naranja) en comparación a la métrica \textit{Oneshot} (curva verde) pero similares en \textit{Val Loss}.
 
 \vspace{0.2cm}
 
-Lo que resulta interesante de este resultado es que la metodología utilizando \textit{Fast DPP} alcanza durante las primeros 30 segundos aproximadamente, un mejor rendimiento en \textit{Train Loss} que el modelo \textit{baseline} (para la métrica DPP \textit{Autoencoder}). Esto da a lugar a su utilización como un ``iniciador'' pues existe un intervalo de tiempo en el que su uso es mejor que el modelo \textit{baseline} y esto es lo que motiva la propuesta de la sección \ref{section:mixed_dpp} donde se prueban esquemas mixtos de entrenamiento utilizando estos resultados. 
+Lo que resulta interesante de este resultado es que la metodología utilizando \textit{Fast DPP} alcanza durante las primeros 30 segundos aproximadamente, un mejor rendimiento en \textit{Train Loss} que el modelo \textit{baseline} (para la métrica DPP \textit{Autoencoder}). Esto da a lugar a su utilización como un ``iniciador'' pues existe un intervalo de tiempo en el que su uso es mejor que el modelo \textit{baseline} y esto es lo que motiva la propuesta de la Sección \ref{section:mixed_dpp} donde se prueban esquemas mixtos de entrenamiento utilizando estos resultados. 
 
 \section{Mixed DPP}
 
-En la sección anterior, se muestra que durante los primeros 30 segundos del entrenamiento (5 épocas aproximadamente) de \textit{Fast DPP} para el problema de clasificación multiclase, la metodología \textit{DPP Autoencoder} superó en rendimiento al \textit{baseline} definido. Como nuestro objetivo es mejorar el tiempo y rendimiento de la red, se propone utilizar un esquema mixto de entrenamiento llamado \textit{Mixed DPP} (detallado en Alg \ref{alg:alg5}) donde vamos a considerar la época de cambio de estrategia $l_m = 5$.
+En la Sección \ref{section:fast_dpp_experiment}, se muestra que durante los primeros 30 segundos del entrenamiento (5 épocas aproximadamente) de \textit{Fast DPP} para el problema de clasificación multiclase, la metodología \textit{DPP Autoencoder} superó en rendimiento al \textit{baseline} definido. Como nuestro objetivo es mejorar el tiempo y rendimiento de la red, se propone utilizar un esquema mixto de entrenamiento llamado \textit{Mixed DPP} (detallado en Alg \ref{alg:alg5}) donde vamos a considerar la época de cambio de estrategia $l_m = 5$.
 
 \vspace{0.2cm}
 
-Sobre el dataset \ref{table:binaria} del problema de clasificación binario y entrenando durante 50 épocas, se obtienen los siguientes resultados: 
+Sobre el dataset Tabla \ref{table:binaria} del problema de clasificación binario y entrenando durante 50 épocas, se obtienen los siguientes resultados: 
 
-\begin{images}[\label{fig:2d_mixed_dpp}]{\centering Resultados Mixed DPP en dataset clasificación binaria (10 iteraciones), M = 100.}
-    \addimage{img/tesis/resultados/loss_2d_mixed.jpg}{width=7cm}{Train loss según época}
-    \addimage{img/tesis/resultados/val_loss_2d_mixed.jpg}{width=7cm}{Val loss según época}
-    \addimage{img/tesis/resultados/time_2d_mixed.jpg}{width=7cm}{Val loss según tiempo}
+
+\begin{images}[\label{fig:2d_mixed_dpp}]{\centering Comparación de resultados de las metodologías Baseline, Fast DPP, Mixed DPP y Reversed Mixed DPP según la métrica de \textit{loss} en el dataset de clasificación binario promediando 10 iteraciones del experimento y $M=100$.}
+    \addimage{img/tesis/resultados/loss_2d_mixed.jpg}{width=7cm}{Train loss según época de entrenamiento.}
+    \addimage{img/tesis/resultados/val_loss_2d_mixed.jpg}{width=7cm}{Validation loss según época de entrenamiento.}
+    \addimage{img/tesis/resultados/time_2d_mixed.jpg}{width=7cm}{Validation loss según tiempo de entrenamiento.}
 
 \end{images}
 
@@ -175,31 +176,32 @@ Según (c) el entrenamiento mediante \textit{Mixed DPP} (curva verde) toma un ma
 
 Por otro lado, no se destacan resultados importantes en la red \textit{Reversed Mixed DPP}. Se esperaba que tuviera algún efecto en las últimas iteraciones al ajustar los ejemplos de la clase minoritaria (mejorando eventualmente alguna métrica de precisión sobre esa clase). 
 
-\begin{images}[\label{fig:nd_mixed_dpp}]{\centering Resultados Mixed DPP en dataset clasificación multiclase (5 iteraciones), M = 400.}
-    \addimage{img/tesis/resultados/loss_nd_mixed.jpg}{width=7cm}{Train loss según época}
-    \addimage{img/tesis/resultados/val_loss_nd_mixed.jpg}{width=7cm}{Val loss según época}
-    \addimage{img/tesis/resultados/time_nd_mixed.jpg}{width=7cm}{Val loss según tiempo}
+\begin{images}[\label{fig:nd_mixed_dpp}]{\centering Comparación de los resultados de las metodologías Baseline y Mixed DPP según la métrica de \textit{loss} en el dataset de clasificación multiclase promediando 5 iteraciones del experimento y $M=400$.}
+    \addimage{img/tesis/resultados/loss_nd_mixed.jpg}{width=7cm}{Train loss según época de entrenamiento.}
+    \addimage{img/tesis/resultados/val_loss_nd_mixed.jpg}{width=7cm}{Validation loss según época de entrenamiento.}
+    \addimage{img/tesis/resultados/time_nd_mixed.jpg}{width=7cm}{Validation loss según tiempo de entrenamiento.}
 
 \end{images}
+
 
 Al trabajar con el problema de clasificación multiclase \textit{Fashion MNIST}, se obtienen los resultados mostrados en \ref{fig:nd_mixed_dpp}. En este caso, el método \textit{baseline} es superior a los métodos \textit{Mixed DPP (Autoencoder)} y \textit{Mixed DPP (Oneshot)} en \textit{Train Loss} (a), ahora bien, con respecto al conjunto de validación, los resultados muestran que los 3 modelos tienen un rendimiento similar en \textit{Val Loss} (b) e incluso las metodologías propuestas son ligeramente mejores (quizás eventualmente reduciendo el \textit{overfitting}).
 
 \vspace{0.2cm}
 
-El resultado que realmente importa se da al analizar el tiempo de entrenamiento (c) de las distintas metodologías. Es claro que el rendimiento de ambas redes propuestas es superior al del \textit{baseline} alcanzando un resultado similar con una diferencia de hasta 100 segundos producto de la inicialización mediante \textit{Fast DPP}. El hecho de que ambas redes propuestas hayan podido tener este resultado valida la segunda hipótesis del Capítulo 1 que propone la utilización de representaciones de baja dimensionalidad (obtenidas a partir del entrenamiento de una red) para el aprendizaje de la métrica de distancia utilizada por el DPP. A su vez, este resultado indica que justamente un esquema mixto de entrenamiento bien ajustado supera el rendimiento de una metodología clásica SGD con sampling uniforme, tal y como establecimos en la primera hipótesis de la sección 1. 
+Un resultado relevante se da al analizar el tiempo de entrenamiento (c) de las distintas metodologías. Es claro que el rendimiento de ambas redes propuestas es superior al del \textit{baseline} alcanzando un resultado similar con una diferencia de hasta 100 segundos producto de la inicialización mediante \textit{Fast DPP}. El hecho de que ambas redes propuestas hayan podido tener este resultado valida la segunda hipótesis del Capítulo 1 que propone la utilización de representaciones de baja dimensionalidad (obtenidas a partir del entrenamiento de una red) para el aprendizaje de la métrica de distancia utilizada por el DPP. A su vez, este resultado indica que justamente un esquema mixto de entrenamiento bien ajustado supera el rendimiento de una metodología clásica SGD con sampling uniforme, tal y como establecimos en la primera hipótesis de la Sección 1. 
 
 \vspace{0.2cm}
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=8cm]{img/tesis/resultados/loss_nd_reversed_mixed.jpg}
-    \caption{Resultados Reversed Mixed DPP en dataset clasificación multiclase (5 iteraciones), M = 400.}
+    \caption{Comparación de los resultados de las metodologías Baseline y Reversed Mixed DPP según la métrica de \textit{loss} en el dataset de clasificación multiclase promediando 5 iteraciones del experimento y $M=400$.}
     \label{fig:nd_reversed_mixed_dpp}
 \end{figure}
 
 Por otro lado, los resultados de \textit{Reversed Mixed DPP} en la Figura \ref{fig:nd_reversed_mixed_dpp} tampoco fueron exitosos, pues, al entrenar con menos ejemplos en las últimas épocas donde la reducción de la función de \textit{loss} es de menor magnitud en comparación al inicio, resultó en una pérdida de \textit{performance} general. Se analiza la posibilidad de trabajo a futuro con respecto a una metodología que cambie la estrategia de sampleo de \textit{batches} cuando la disminución de \textit{loss} sea despreciable. 
 
-\begin{images}[\label{fig:time_nd_metric}]{\centering Tiempo de Entrenamiento Oneshot y Autoencoder en dataset clasificación multiclase.}
+\begin{images}[\label{fig:time_nd_metric}]{\centering Tiempo de entrenamiento de las redes Oneshot y Autoencoder en el dataset de lasificación multiclase.}
     \addimage{img/tesis/resultados/time_nd_oneshot.png}{width=7cm}{Tiempo Entrenamiento Oneshot}
     \addimage{img/tesis/resultados/time_nd_autoencoder.png}{width=7cm}{Tiempo Entrenamiento Autoencoder}
 \end{images}
