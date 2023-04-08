@@ -1,0 +1,314 @@
+\begin{appendixs}
+
+    \section{Acrónimos}
+    
+    Lista de acrónimos: 
+    
+    \begin{itemize}
+        \item ADAM: Adaptative Moment Optimization
+        \item B: Matriz de Descomposición de Cholesky 
+        \item CNN: Convolutional Neural Network
+        \item DPP: Determinantal Point Process 
+        \item FC: Fully Connected
+        \item FFNN: Feedforward Neural Network
+        \item FN: False Negatives
+        \item FP: False Positives
+        \item K: Kernel Marginal 
+        \item L: Matriz de L-ensamblaje 
+        \item MCMC: Markov Chain Monte Carlo
+        \item MLP: Multilayer Perceptron
+        \item PCA: Principal Component Analysis
+        \item PDS: Poisson Disk Sampling
+        \item RBF: Radial Basis Function
+        \item SGD: Stochastic Gradient Descent
+        \item TN: True Negatives
+        \item TP: True Positives
+        \item TSNE: t-Distributed Stochastic Neighbor Embedding
+        \item UMAP: Uniform Manifold Approximation and Projection
+        
+    \end{itemize}
+
+
+    \section{Teoremas y Demostraciones}
+    
+    \begin{teo} \hypertarget{Teorema .1}{}
+    Para cualquier $A \subseteq \mathcal{Y}$ 
+    \[ \sum_{A \subseteq Y \subseteq \mathcal{Y}}\det(L_Y) = \det(L + I_{\bar{A}}) ,  \]
+    donde $I_{\bar{A}}$ con 1's en la diagonal correspondiente a elementos de $\bar{A} = \mathcal{Y} - A$. Con esto 
+    
+    \[ \mathcal{P}(\mathbf{Y} = Y) = \frac{\det(L_Y)}{\det(L+I)} . \]
+    \end{teo}
+    
+    \textbf{Demostración Teorema.1}: 
+    Por inducción, si $A = \mathcal{Y}$ el resultado es trivial, supongamos que el resultado es cierto siempre que $\bar{A}$ tenga cardinalidad menor a $k$. Sea $A$ tal que $|\bar{A}| = k > 0$ y sea $i$ un elemento de $\mathcal{Y}$ tal que $i \in \bar{A}$, notar que 
+    
+    \[
+    L + I_{\bar{A}} = 
+    \begin{pmatrix}
+    L_{ii}+1 & L_{i\bar{i}} \\ 
+    L_{\bar{i}i} & L_{\mathcal{Y}-\{ i \}} + I_{\mathcal{Y} - \{ i \} - A} 
+    \end{pmatrix} .
+    \]
+    Por la multilinealidad del determinante, se tiene que 
+    \begin{align*}
+    \det(L + I_{\bar{A}}) & = 
+    \begin{vmatrix}
+    L_{ii} & L_{i\bar{i}} \\ 
+    L_{\bar{i}i} & L_{\mathcal{Y}-\{ i \}} + I_{\mathcal{Y} - \{ i \} - A}  
+    \end{vmatrix} +
+    \begin{vmatrix}
+    1 & 0 \\ 
+    L_{\bar{i}i} & L_{\mathcal{Y}-\{ i \}} + I_{\mathcal{Y} - \{ i \} - A}  
+    \end{vmatrix} \\
+    & = \det(L + I_{\overline{A \cup \{i \}}}) + \det(L_{\mathcal{Y} - \{i\}} + I_{\mathcal{Y}-\{i\}-A}) .
+    \end{align*}
+    Utilizando la hipótesis inductiva, en cada término, se tiene que 
+    \[
+    \det(L + I_{\bar{A}}) = \sum_{A \cup \{i\} \subseteq Y \subseteq \mathcal{Y}} \det(L_Y) + \sum_{A \subseteq Y \subseteq \mathcal{Y} - \{ i \}} \det(L_Y) = \sum_{A \subseteq Y \subseteq \mathcal{Y}}\det(L_Y) . 
+    \]
+    Lo que prueba el resultado. Finalmente, si $k$ es la constante de proporcionalidad y $A = \emptyset$
+    \[
+    1 = \sum_{A \subseteq Y \subseteq \mathcal{Y}}\mathcal{P}(\mathbf{Y} = Y) = \sum_{A \subseteq Y \subseteq \mathcal{Y}} k \cdot \det(L_Y) = k \det(L + I) , 
+    \]
+    con lo que $k = \frac{1}{\det(L + I)}$ y se concluye la demostración.
+    
+    \begin{teo}\hypertarget{Teorema .2}{}
+    Un $L$-ensamblaje es un DPP cuyo kernel marginal es 
+    \[
+    K = L(L+I)^{-1} = I - (L+I)^{-1} . 
+    \]
+    \end{teo}
+    
+    \textbf{Demostración Teorema.2}: 
+    Utilizando el \hyperlink{Teorema .1}{Teorema .1}, la probabilidad marginal de un conjunto $A$ viene dada por 
+
+    \begin{align*}
+    \mathcal{P}_{L}(A \subseteq \mathbf{Y}) & = \frac{\sum_{A \subseteq Y \subseteq \mathcal{Y}}\det(L_Y)}{\sum_{Y \subseteq \mathcal{Y}}\det(L_Y)} \\
+    & = \frac{\det(L + I_{\bar{A}})}{\det(L+I)} \\
+    & = \det((L + I_{\bar{A}})(L+I)^{-1}) . 
+    \end{align*}
+    
+    Utilizando la igualdad $L(L+I)^{-1} = I - (L+I)^{-1}$ y definiendo $K = I - (L+I)^{-1}$ se obtiene que 
+    
+    \begin{align*}
+    \mathcal{P}_L(A \subseteq \mathbf{Y}) & = \det(I_{\bar{A}}(L+I)^{-1} + I - (L+I)^{-1}) \\
+    & = \det(I - I_{A}(L+I)^{-1}) \\
+    &= \det(I_{\bar{A}} + I_{A}K) . 
+    \end{align*} 
+    
+    Notar que la multiplicación $I_{A}K$ hace $0$ todas las filas no correspondientes con $A$, de esta forma, podemos considerar la partición $\mathcal{Y} = \bar{A} \cup A$ y obtener
+    \[
+    \det(I_{\bar{A}} + I_{A}K) = 
+    \begin{vmatrix}
+    I_{|\bar{A}| \times |\bar{A}| } & 0 \\
+    K_{A\bar{A}} & K_A
+    \end{vmatrix} = 
+    \det(K_A) , 
+    \]
+    
+    lo que concluye el resultado. 
+    
+    \begin{teo}\hypertarget{Teorema .3}{}
+    Los valores propios no nulos de $C$ y $L$ son idénticos y los vectores propios correspondientes se relacionan mediante la matriz $B$. Esto es, 
+    \[ 
+    C = \sum_{n=1}^D \lambda_n\hat{v}_n\hat{v}^{\top}_n , 
+    \]
+    es una descomposición en valores y vectores propios de $C$ si y solamente si 
+    \[
+    L = \sum_{i=1}^D \lambda_n \left ( \frac{1}{\sqrt{\lambda_n}}B^{\top}\hat{v}_n\right ) \left ( \frac{1}{\sqrt{\lambda_n}}B^{\top}\hat{v}_n\right )^{\top} , 
+    \]
+    es una descomposición en valores y vectores propios de $L$
+    \end{teo}
+    
+    \textbf{Demostración Teorema.3}: 
+    ($\Rightarrow$) Sea  $\{(\lambda_n , \hat{v}_n)\}_{n=1}^D$ una descomposición en valores y vectores propios de $C$. Entonces
+    \begin{align*}
+    \sum_{i=1}^D \lambda_n \left ( \frac{1}{\sqrt{\lambda_n}}B^{\top}\hat{v}_n\right ) \left ( \frac{1}{\sqrt{\lambda_n}}B^{\top}\hat{v}_n\right )^{\top} &= B^{\top} \left ( \sum_{n=1}^D \hat{v}_n\hat{v}^{\top}_n \right ) B \\
+    & = B^{\top}B = L , 
+    \end{align*}
+    
+    donde se puede asumir que $\hat{v}_n$ son ortonormales, para cada $n$ se tiene que 
+    \begin{align*}
+    \left\| \frac{1}{\sqrt{\lambda_n}}B^{\top}\hat{v}_n \right\|^2 &= \frac{1}{\lambda_n}(B^{\top}\hat{v}_n)^{\top}(B^{\top}\hat{v}_n) \\
+    &= \frac{1}{\lambda_n}\hat{v}^{\top}_n C \hat{v}_n \\
+    &= \frac{1}{\lambda_n}\lambda_n ||\hat{v}_n|| \\
+    &= 1 , 
+    \end{align*}
+    lo anterior, recordando que $C\hat{v}_n = \lambda_n\hat{v}_n$ pues $\hat{v}_n$ es un valor propio de $C$. Finalmente para cada $1 \leq a,b \leq D$ distintos, se tiene que 
+    \begin{align*}
+    \left ( \frac{1}{\sqrt{\lambda_a}}B^{\top}\hat{v}_a \right )^{\top}\left( \frac{1}{\sqrt{\lambda_b}}B^{\top}\hat{v}_b \right ) &= \frac{1}{\sqrt{\lambda_a\lambda_b}}\hat{v}^{\top}_aC\hat{v}_b \\
+    &= \frac{\sqrt{\lambda_b}}{\sqrt{\lambda_a}}\hat{v}^{\top}_a\hat{v}_b \\
+    &= 0 , 
+    \end{align*}
+    Se concluye entonces que $\left \{ \left (\lambda_n , \frac{1}{\sqrt{\lambda_n}}B^{\top}\hat{v}_n \right )\right \}_{n=1}^D$ es una descomposición en valores y vectores propios de $L$. La dirección contraria ($\Leftarrow$) es análoga observando que $L = B^{\top}B$ y que $L$ tiene rango a lo más $D$ y por tanto tiene a lo más $D$ valores propios no nulos.
+    
+    \begin{teo}\hypertarget{Teorema .4}{}
+    Sea $\hat{G}$ el estimador del gradiente objetivo definido como 
+    \[
+    \hat{G}(\theta) = \frac{1}{|B|}\sum_{i \in B}\grad l(f(x_i , \theta),y_i) , 
+    \]
+    con $B$ sampleado a través de un proceso repulsivo $\mathcal{P}$. Entonces 
+    
+    \[
+        \mathbb{V}ar(\hat{G}) = \frac{1}{k^2}\int_{\nu \times \nu}\lambda(x)\lambda(y)g(x,\theta)^{\top}g(y,\theta)\left [ \frac{\rho(x,y)}{\lambda(x)\lambda(y)} - 1\right ]dxdy
+        + \frac{1}{k^2} \int_{\nu} ||g(x,\theta)||^2\lambda(x)dx , 
+    \]
+    
+    donde $g(x,\theta) = \grad l(f(x, \theta))$, $\lambda(x)$ la cantidad de puntos esperada alrededor de $x$ , $\rho(x,y)$ la cantidad de puntos esperada alrededor de $x$ e $y$ , $\nu \times \nu$ la grilla considerada y $k = |B|$ el tamaño del \textit{mini-batch}. 
+    \end{teo}
+    
+    \textbf{Demostración Teorema.4}: 
+    Para demostrar este teorema, es necesario utilizar el teorema de \textit{Campbell} que permite calcular la esperanza de sumas de funciones medibles $f: \mathbb{R}^d \rightarrow \mathbb{R}$ mediante sus densidades producto bajo un proceso puntual $\mathcal{P}$.
+    
+    \[
+    \mathbb{E}_{\mathbb{P}}\left [ \sum_{x_i \in \mathcal{P}} f(x_i) \right] = \int_{\mathbb{R}^d} f(x)\lambda(x)dx , 
+    \] 
+    por otro lado, si $f: \mathbb{R}^d \times  \mathbb{R}^d \rightarrow \mathbb{R}$
+    \[
+    \mathbb{E}_{\mathbb{P}} \left [ \sum_{i \neq j} f(x_i,x_j) \right] = \int_{ \mathbb{R}^d \times  \mathbb{R}^d} f(x,y)\rho(x,y)dxdy , 
+    \]
+    con lo anterior se tiene que 
+    \[
+    \mathbb{E}_{\mathcal{P}}\left [ \hat{G}(\theta) \right] = \mathbb{E}_{\mathcal{P}} \left [ \frac{1}{k}\sum_{i}g(x_i,\theta) \right] = \int_{\nu} \frac{1}{k}g(x,\theta)\lambda(x)dx . 
+    \] 
+    La varianza de una variable aleatoria multi-dimensional puede ser escrita como $\mathbb{V}ar_{\mathcal{P}}(\hat{G}) = Tr(Cov_{\mathcal{P}}(\hat{G})) = \sum_m \mathbb{V}ar_{\mathcal{P}}(\hat{G}_m) = \sum_m \left [ \mathbb{E}_{\mathcal{P}}(\hat{G}^2_m) - (\mathbb{E}_{\mathcal{P}}(\hat{G}_m))^2 \right ]$. Por otro lado, 
+    \begin{align*}
+        \mathbb{E}_{\mathcal{P}}[\hat{G}^2_m] &= \mathbb{E}_{\mathcal{P}} \left [ \frac{1}{k^2} \sum_{ij} g_m(x_i, \theta)g_m(x_j,\theta) \right ] \\  
+        &= \mathbb{E}_{\mathcal{P}} \left [ \frac{1}{k^2} \sum_{i \neq j} g_m(x_i, \theta)g_m(x_j,\theta) \right ] + \mathbb{E}_{\mathcal{P}} \left [ \frac{1}{k^2} \sum_{i} g_m^2(x_i, \theta)\right ] \\
+        &= \frac{1}{k^2}\int_{\nu \times \nu}g_m(x,\theta)g_m(y,\theta)\rho(x,y)dxdy + \frac{1}{k^2}\int_{\nu}g^2_m(x,\theta)\lambda(x)dx , 
+    \end{align*}
+    además, 
+    
+    \begin{align*}
+    (\mathbb{E}_{\mathcal{P}}[\hat{G}_m])^2 &= \left ( \frac{1}{k} \int_{\nu} g_m(x,\theta)\lambda(x)dx \right )^2 \\
+    &= \frac{1}{k^2} \int_{\nu \times \nu}g_m(x,\theta)g_m(y,\theta)\lambda(x)\lambda(y)dxdy .
+    \end{align*}
+    
+ 
+    \noindent Juntando todo y sumando sobre $m$ se obtiene el resultado deseado 
+    \[
+         \mathbb{V}ar(\hat{G}) = \frac{1}{k^2}\int_{\nu \times \nu}\lambda(x)\lambda(y)g(x,\theta)^{\top}g(y,\theta)\left [ \frac{\rho(x,y)}{\lambda(x)\lambda(y)} - 1\right ]dxdy
+        + \frac{1}{k^2} \int_{\nu} ||g(x,\theta)||^2\lambda(x)dx . 
+    \]
+    
+    \begin{cor}\hypertarget{Corolario .1}{}
+    
+    Una estrategia de sampleo de \textit{mini-batch} mediante un proceso repulsivo disminuye la varianza del estimador del gradiente objetivo $\hat{G}(\theta)$ con respecto a una estrategia de sampleo uniforme.
+    
+    \end{cor}
+    
+    Para intuir el corolario, es necesario tener en mente que el término 
+    \[
+        \frac{1}{k^2}\int_{\nu \times \nu}\lambda(x)\lambda(y)g(x,\theta)^{\top}g(y,\theta)\left [ \frac{\rho(x,y)}{\lambda(x)\lambda(y)} - 1\right ]dxdy , 
+    \]
+    
+    es nulo cuando el sampleo es uniforme pues $\rho(x,y) = \lambda(x)\lambda(y)$ y es negativo cuando el sampleo es mediante algún proceso repulsivo pues:
+    
+    \begin{itemize}
+        \item Si $x,y$ se encuentran lejos, $\rho(x,y) \approx \lambda(x)\lambda(y)$.
+        \item Si $x,y$ se encuentran cerca $\rho(x,y) < \lambda(x)\lambda(y)$ (proceso repulsivo) y asumiendo que la función de \textit{loss} es suave en sus argumentos, entonces los gradientes se encuentran alineados tal que $g(x,\theta)^{\top}g(y,\theta) > 0$. 
+        
+    \end{itemize}
+    
+    Dicho esto, la expresión
+    \[
+        \frac{1}{k^2}\int_{\nu \times \nu}\lambda(x)\lambda(y)g(x,\theta)^{\top}g(y,\theta)\left [ \frac{\rho(x,y)}{\lambda(x)\lambda(y)} - 1\right ]dxdy , 
+    \]
+    es negativa y por tanto disminuye la varianza del estimador $\hat{G}(\theta)$ con respecto a una estrategia de sampleo uniforme. 
+  
+  
+  
+  
+  \section{Parámetros de Arquitecturas}
+  
+  \begin{table}[ht]
+    \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    Experiment & Train & Batch size & Optimizer & Epochs &  Act Func \\ \hline
+
+    \ref{experiment:fast_dpp}      & \ref{table:binaria}    & 64        & Adam      & 10                & Tanh         \\ \hline
+    \ref{experiment:mixed_dpp}      & \ref{table:binaria}    & 64        & Adam      & 50                 & Tanh         \\ \hline
+
+    \end{tabular}
+    \caption{Parámetros Baseline Binario por Experimento.}
+    \label{table:baseline2d_parameters}
+    \end{table}
+    
+   \begin{table}[ht]
+    \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    Experiment & Train & Batch size & Optimizer & Epochs &  Act Func \\ \hline
+
+    \ref{experiment:fast_dpp}      & \ref{table:fashion_mnist}    & 64        & Adam      & 10                & Relu         \\ \hline
+    \ref{experiment:mixed_dpp}      & \ref{table:fashion_mnist}    & 64        & Adam      & 15                 & Relu         \\ \hline
+
+    \end{tabular}
+    \caption{Parámetros Baseline Multiclase por Experimento.}
+    \label{table:conv_parameters}
+    \end{table}
+  
+  \begin{table}[ht]
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
+    Experiment & Train & Batch size & Optimizer & Epochs & Latent Vector & Act Func \\ \hline
+    \ref{experiment:sampling}      & \ref{table:fashion_mnist}   & 128        & Adam      & 20     & 16                & Sigmoid         \\ \hline
+    \ref{experiment:fast_dpp}      & \ref{table:fashion_mnist}    & 128        & Adam      & 20     & 32                & Sigmoid         \\ \hline
+    \ref{experiment:mixed_dpp}      & \ref{table:fashion_mnist}    & 128        & Adam      & 20     & 32                & Sigmoid         \\ \hline
+    \end{tabular}
+    \caption{Parámetros Autoencoder por Experimento.}
+    \label{table:autoencoder_parameters}
+    \end{table}
+  
+  
+  \begin{table}[ht]
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
+    Experiment & Train & Batch size & Optimizer & Epochs & Latent Vector & Act Func \\ \hline
+    \ref{experiment:sampling}      & \ref{table:fashion_mnist}    & 128        & Rmsprop      & 10     & 16                & Relu         \\ \hline
+    \ref{experiment:fast_dpp}      & \ref{table:fashion_mnist}    & 128        & Rmsprop      & 10     & 32                & Relu         \\ \hline
+    \ref{experiment:mixed_dpp}      & \ref{table:fashion_mnist}    & 128        & Rmsprop      & 10     & 32                & Relu         \\ \hline
+    
+    \end{tabular}
+    \caption{Parámetros Oneshot por Experimento.}
+    \label{table:oneshot_parameters}
+    \end{table}
+    
+    
+    \begin{table}[ht]
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
+    Experiment & Train & Batch size & Optimizer & Epochs & Latent Vector & $\alpha$ \\ \hline
+    \ref{experiment:dpp_net}      & \ref{table:fashion_mnist}    & 64       & Adam      & 15     & 32                & 1/3         \\ \hline
+    
+    \end{tabular}
+    \caption{Parámetros DPP NET.}
+    \label{table:dppnet_parameters}
+    \end{table}
+    
+    \section{Especificaciones de Hardware}
+    
+    Todos los experimentos fueron realizados mediante la utilización de \href{https://colab.research.google.com/?hl=es}{Google Colab} y \href{https://www.python.org}{Python 3}. Las especificaciones de \textit{Hardware} son (podrían cambiar según la sesión de \textit{Google Colab})
+    
+    \begin{itemize}
+        \item CPU Model: Intel(R) Xeon(R).
+        \item CPU Freq: 2.30 HGz.
+        \item CPU Cores: 4.
+        \item RAM: 12.68 GB.
+        \item Disk: 107.72 GB.
+    \end{itemize}
+    
+    El entrenamiento de las redes neuronales fue realizado mediante la utilización de \href{https://www.tensorflow.org}{Tensorflow} en su versión 2.9.2. 
+
+  
+    
+
+    
+    
+    
+    
+    
+    
+
+    
+    
+\end{appendixs}

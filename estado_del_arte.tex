@@ -1,0 +1,80 @@
+\section{Introducción}
+
+En la búsqueda de nuevas técnicas y herramientas que permitan mejorar el rendimiento de las redes neuronales, están aquellas que se centran en los algoritmos de optimización, en la selección de \textit{batches}, las épocas de entrenamiento, entre muchos otros elementos que componen la estructura de la red. 
+
+\vspace{0.2cm}
+
+En este contexto, uno de los avances más importantes del área se ha obtenido aplicando cambios en el algoritmo de optimización. Desde la adición de \textit{Momentum} al algoritmo de descenso del gradiente estocástico, hasta modificaciones dinámicas del \textit{learning rate} e incluso, combinaciones de ambas con el algoritmo ADAM (\textit{Adaptative Moment Optimization}) \cite{https://doi.org/10.48550/arxiv.1412.6980}.
+
+\vspace{0.2cm}
+
+Por otro lado, en la selección de \textit{batches}, el artículo \textit{Online Batch Selection for Faster Training of Neural Networks} \cite{https://doi.org/10.48550/arxiv.1511.06343} propone visitar con más frecuencia aquellos ejemplos que contribuyan en mayor magnitud a la función de \textit{loss}.
+ 
+\vspace{0.2cm}
+
+Más específicamente, el algoritmo propuesto en \cite{https://doi.org/10.48550/arxiv.1511.06343}, ordena los $N$ elementos del conjunto de entrenamiento según su último gradiente computado $\psi_i(x)$ en sentido descendiente. En la próxima iteración, cada elemento del \textit{batch} se selecciona según una probabilidad $p_i$ definida como 
+\[
+p_i = \frac{1/\exp(\log(s_e)/N)^{i}}{\sum_{k=1}^N 1/\exp(\log(s_e)/N)^{k}} ,
+\] donde $s_e$ es un parámetro del modelo denominado \textit{selection pressure}. Notar que $p_i$ sigue un decaimiento exponencial y que los elementos que más aportan al gradiente serán muestreados con una mayor probabilidad en la siguiente iteración. 
+
+\vspace{0.2cm}
+
+El artículo \textit{Submodular Batch Selection for Training Deep Neural Networks} publicado en 2019 \cite{ijcai2019p372}, propone que el \textit{batch} seleccionado tiene que ser lo más informativo posible. Se utiliza el \textit{Uncertainty Score} $U(x_i)$ que corresponde a la entropía del modelo actual $w^t$ en la iteración $t$ para el elemento $x_i$
+
+\[
+U(x_i) = - \sum_{y \in C} P(y | x_i, w^t)\log P(y | x_i, w^y) , 
+\]
+donde $C$ es el conjunto de todas las clases. Notar que si bien podríamos seleccionar un \textit{batch} que únicamente maximice esta cantidad, se podría llevar a samplear elementos muy similares con alta entropía. Para evitar esto, se complementa con el \textit{Redundacy Score} $R(x_i)$ definido como
+\[
+R(x_i) = \min_{x_j \in S: i \neq j}\phi(x_i,x_j) , 
+\]
+donde $\phi(\cdot, \cdot)$ es alguna métrica de distancia. Entre mayor sea $R(x_i)$, el elemento $x_i$ añadido al \textit{batch} es más diverso con respecto a sus pares y por tanto un mejor candidato.    
+
+\vspace{0.2cm}
+
+Finalmente, el artículo \textit{Active Mini Batch Sampling using Repulsive Point Processes} \cite{https://doi.org/10.48550/arxiv.1804.02772} publicado en 2018, propone utilizar procesos repulsivos para el selección de los \textit{mini batches} de entrenamiento y prueba que efectivamente, esto reduce la varianza del estimador del gradiente en el algoritmo de SGD. Es en este último trabajo en el que profundizaremos. 
+
+
+\section{Active Mini Batch Sampling}
+
+
+La modificación al algoritmo de descenso de gradiente estocástico (SGD) que motiva el artículo \cite{https://doi.org/10.48550/arxiv.1804.02772} es la siguiente
+
+\[
+\theta_{t+1} = \theta_t - \rho_t \hat{G}(\theta_t) = \theta_t - \rho_t \frac{1}{|B|}\sum_{i \in B}\grad l(f(x_i , \theta_t),y_i), \quad B \sim \mathcal{P} , 
+\] donde $B \sim \mathcal{P}$ es el \textit{mini-batch} sampleado a través de algún proceso puntual $\mathcal{P}$ (a diferencia de un SGD estándar donde $B$ es sampleado de forma aleatoria). El proceso puntual seleccionado corresponde a uno del tipo repulsivo, es decir, que busca maximizar la diversidad de la muestra según alguna métrica. El resultado que fundamenta la utilización de este proceso es 
+
+\begin{teo}
+Sea $\hat{G}$ el estimador del gradiente objetivo definido como 
+\[
+\hat{G}(\theta) = \frac{1}{|B|}\sum_{i \in B}\grad l(f(x_i , \theta),y_i) , 
+\]
+con $B$ sampleado a través de un proceso repulsivo $\mathcal{P}$. Entonces 
+
+\[
+    \mathbb{V}ar(\hat{G}) = \frac{1}{k^2}\int_{\nu \times \nu}\lambda(x)\lambda(y)g(x,\theta)^{\top}g(y,\theta)\left [ \frac{\rho(x,y)}{\lambda(x)\lambda(y)} - 1\right ]dxdy
+    + \frac{1}{k^2} \int_{\nu} ||g(x,\theta)||^2\lambda(x)dx ,
+\] donde $g(x,\theta) = \grad l(f(x, \theta))$, $\lambda(x)$ la cantidad de puntos esperada alrededor de $x$, $\rho(x,y)$ la cantidad de puntos esperada alrededor de $x$ e $y$, $\nu \times \nu \subset \mathbb{R}^n \times \mathbb{R}^n$ la grilla considerada y $k = |B|$ el tamaño del \textit{mini-batch}.
+\end{teo}
+
+La demostración se incluye en el anexo (\hyperlink{Teorema .4}{Teorema .4}). Los 2 puntos importantes en este resultado son que 
+\begin{enumerate}
+    \item El primer término de $\mathbb{V}ar(\hat{G})$ es negativo para cualquier proceso repulsivo.
+    \item El primer término desaparece cuando se utiliza un método de sampleo uniforme (como en el SGD estándar) pues $\rho(x,y) = \lambda(x)\lambda(y)$. 
+\end{enumerate}
+
+Con ambas propiedades en mente (\hyperlink{Corolario .1}{Corolario .1}), se puede concluir que un proceso repulsivo disminuye la varianza del estimador del gradiente objetivo y por tanto la convergencia al óptimo se puede realizar de forma mucho más rápida (por ejemplo, aumentando el valor del \textit{learning rate}).
+
+\section{Oportunidad de Mejora}
+
+El problema con utilizar un proceso repulsivo en la selección del \textit{mini batch} es que añade un costo extra a cada iteración del algoritmo de SGD y que resulta en un cuello de botella para el entrenamiento de la red neuronal. Para soslayar este asunto, el artículo \cite{https://doi.org/10.48550/arxiv.1804.02772} propone utilizar un proceso repulsivo \textit{Poisson Disk Sampling} (PSD) cuya complejidad es considerablemente menor ($O(k^2)$) a la de un k-DPP ($O(Nk^3)$) pero que muestra un repulsión local mucho mayor \cite{Biscio_2016} (lo que no siempre es conveniente en problemas de clasificación desbalanceados). 
+
+
+\vspace{0.2cm}
+
+En este contexto, el objetivo de esta tesis será encontrar estructuras alternativas que permitan utilizar un proceso repulsivo tan estudiado como un DPP pero que no se vean limitadas por el tiempo de entrenamiento de la red. En la siguiente sección, se detallan posibles arquitecturas que utilizan un DPP para la selección de sus \textit{batches}, pero que a diferencia de lo presentado en el artículo \cite{https://doi.org/10.48550/arxiv.1804.02772} no entrenan con todos los datos. 
+
+
+
+
+

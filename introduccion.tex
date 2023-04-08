@@ -1,0 +1,78 @@
+\section{Motivación}
+
+El aprendizaje profundo o \textit{Deep Learning} es una de las ramas del aprendizaje de máquinas que más desarrollo y mejoras han tenido en las últimas décadas y no solo por los avances en \textit{hardware} que permite el entrenamiento de redes más profundas y complejas, sino que también por los constantes esfuerzos de la comunidad de \textit{Machine Learning} en probar técnicas más sofisticadas en el entrenamiento y construcción de estas redes.
+
+\vspace{0.2cm}
+
+Dada la complejidad de las redes neuronales y la amplia variedad de elementos que la conforman, no es sorprendente que los recientes avances en el área sean debidos a modificaciones marginales de sus componentes que en conjunto suponen grandes cambios en el rendimiento de la red. Es por esto que surge la necesidad de continuar añadiendo mejoras a estas componentes haciendo uso de la intuición y las herramientas que la matemática proporciona. 
+
+\vspace{0.2cm}
+
+En esta tesis, nos centraremos en la selección de los \textit{batches} que se utilizan para entrenar redes neuronales mediante el descenso del gradiente estocástico. Actualmente y dado su ligero costo computacional, la elección del \textit{batch} se realiza de manera aleatoria pero uniforme entre todos los datos y por tanto, al ser un sampleo de tamaño reducido (\textit{mini batch}), no se logra capturar correctamente la distribución de los datos (añade mucho ruido) y tampoco da espacio a la selección activa y adaptativa. 
+
+\vspace{0.2cm}
+
+Entre los esfuerzos por introducir métodos inteligentes de sampleo de \textit{batches}, se encuentra el trabajo de \textit{Zhang, C. et al.} \cite{https://doi.org/10.48550/arxiv.1804.02772} en el que se propone utilizar procesos repulsivos que permiten añadir el concepto de ``diversidad'' a las muestras de datos capturadas en cada iteración del entrenamiento de una red neuronal. Si bien el artículo muestra una mejora considerable en el rendimiento de la red mediante una reducción de la varianza del estimador del gradiente de la función de pérdida (\textit{loss}) en el algoritmo de descenso de gradiente estocástico, se queda limitado al uso de un proceso repulsivo de bajo costo computacional pero altamente restrictivo (\textit{Poisson Disk Sampling}) en el sentido de la repulsión entre los elementos.
+
+\vspace{0.2cm}
+
+Se propone entonces, utilizar un proceso repulsivo profundamente estudiado conocido como \textit{Determinantal Point Process} que si bien es de mayor coste computacional, no es restrictivo en la repulsión de los elementos pues su enfoque es puramente probabilístico. Para ello, se buscarán formas de soslayar el problema del alto coste computacional mediante propuestas de arquitecturas que se entrenan únicamente con datos relevantes y no redundantes según el proceso repulsivo, compitiendo así con redes que miran todos los datos pero de forma ingenua. 
+
+\vspace{0.2cm}
+
+
+Otro desafío importante de esta propuesta de entrenamiento radica en la diversidad de tipologías de datos con la que se trabajan, tales como imágenes, series de tiempo, videos, entre otras. Para establecer un proceso repulsivo, es necesario contar con una métrica de distancia (o similitud) que permita medir la repulsión entre pares de elementos y esto se vuelve complejo al tratar con ciertos tipos de datos. La búsqueda de una métrica transversal a los problemas y de fácil implementación es entonces otro de los objetivos que se buscará resolver dentro de esta tesis. 
+
+
+
+\section{Hipótesis}
+
+Las hipótesis de este trabajo son: 
+
+\begin{enumerate}
+
+    \item  La selección de \textit{batches} mediante un proceso repulsivo como \textit{Determinantal Point Process} en una arquitectura que no considera todos los datos, sino que entrena únicamente con los más relevantes, logra acelerar significativamente el entrenamiento inicial de una red neuronal. Una vez ajustada, esta red supera el rendimiento obtenido por una red entrenada mediante una estrategia de muestreo uniforme.
+    
+    \item La utilización de redes que aprenden representaciones de baja dimensionalidad de los datos, o bien, que aprendan directamente una métrica de distancia, permite que en problemas de alta dimensión, un \textit{Determinantal Point Process} muestree con mayor frecuencia los ejemplos de la clase minoritaria en los primeros \textit{batch} del entrenamiento. Esto permite lograr una aproximación más precisa del problema de clasificación en las primeras iteraciones. 
+
+    
+\end{enumerate}
+
+
+\section{Objetivos Generales}
+
+El objetivo general de esta tesis es el de desarrollar un algoritmo de selección de \textit{batches} que utilice un proceso puntual determinantal para el entrenamiento de una red neuronal mientras que se resuelve el problema del alto costo computacional y la selección de la métrica de distancia adecuada al tipo de problema.
+
+
+\section{Objetivos Particulares}
+
+\begin{itemize}
+    \item Creación de arquitecturas que realicen el entrenamiento de una red neuronal sin utilizar todos los datos y que implementen un proceso puntual determinantal para la selección de \textit{batches}.
+    
+    \item Comparar distintas métricas de distancia definidas sobre el conjunto de entrenamiento y su efecto como medida diversidad para el proceso puntual determinantal. 
+
+    \item Analizar cuantitativa y cualitativamente el efecto de utilizar un proceso repulsivo para el muestreo de \textit{batches} en problemas de clasificación desbalanceados en baja y alta dimensionalidad. 
+    
+
+\end{itemize}
+
+
+
+\section{Contribuciones}
+
+Las contribuciones de este trabajo se pueden resumir como: 
+
+\begin{itemize}
+    \item Se proponen 3 arquitecturas alternativas a las clásicas que admiten el uso de un proceso puntual determinantal para la selección de batches representativos y tal que su entrenamiento se realiza sin utilizar todos los datos. Se muestra experimentalmente que una de ellas, \textit{Mixed DPP}, supera el rendimiento de una red convencional (con SGD sin selección activa de \textit{batches}) en un dataset de alta dimensionalidad y alto coste de procesamiento (\textit{Fashion MNIST}). 
+ 
+    \item Se proponen y discuten distintas alternativas de métricas de distancia que pueden ser utilizadas para samplear con un proceso repulsivo y cómo algunas de ellas pueden ser transversales a problemas con distintos tipos de datos. 
+
+    \item Se establece una guía para continuar el desarrollo de esta tesis mediante espacios de mejora, ya sea en optimización de los algoritmos presentados, propuestas de métricas de distancia y esquemas de entrenamiento.
+
+\end{itemize}
+
+
+\section{Estructura de la Tesis}
+
+La tesis se divide en 6 capítulos siendo el primer capítulo la introducción presentada. A continuación, se presenta un capítulo con el marco teórico que permite dar una visión general de los algoritmos y estructuras que se utilizarán a lo largo de la tesis y más importante aún, la teoría que fundamenta los procesos puntuales determinantales que serán el foco de los experimentos posteriores. En el Capítulo 3, se hará una revisión de las principales iniciativas en la selección activa de \textit{batches} y en particular, de una que estudia el uso de los procesos repulsivos para ello. Esta última da pie a los modelos propuestos y descritos en el Capítulo 4 junto a las métricas de distancia que se analizarán. El Capítulo 5 recopila los resultados de estos modelos en problemas de clasificación con datos de distinto tipo y dimensionalidad. Finalmente, el Capítulo 6 hará una síntesis de los resultados, experimentos y explicaciones que permitirán corroborar o refutar las hipótesis propuestas en el primer capítulo, además del trabajo a futuro y los espacios de mejora. 
+

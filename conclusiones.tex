@@ -1,0 +1,43 @@
+\section{Comentarios}
+
+Como se mostró en el desarrollo de esta tesis, las metodologías \textit{Fast DPP} y su posterior modificación \textit{Mixed DPP} permiten realizar el entrenamiento de una red neuronal de una manera más óptima que la metodología actual con sampleo uniforme. Mediante el uso de \textit{Fast DPP}, es posible utilizar un Proceso Puntual Determinantal (DPP) incluso con el tiempo elevado de sampleo que este posee. Los resultados mostraron que para un conjunto de datos de dimensión elevada, durante los primeros 30 segundos de entrenamiento, la red \textit{Fast DPP} mostraba un mejor desempeño que un \textit{baseline} de sampleo uniforme y haciendo uso de esto, se planteó \textit{Mixed DPP} para combinar las estrategias y resultar en una red de mejor rendimiento. 
+
+\vspace{0.2cm}
+
+Por otro lado, para el conjunto de clasificación binario, el resultado anterior no se tenía pues la dimensión del conjunto de entrenamiento era baja y la red poco profunda, resultando en que el uso de un DPP aumentara el tiempo de entrenamiento. Si se comparan los resultados en términos de épocas, la metodología \textit{Mixed DPP} mostró mejores resultados que una metodología \textit{baseline}.
+
+\vspace{0.2cm}
+
+Con respecto a la modificación \textit{Reversed Mixed DPP}, esta no mostró resultados favorables en ninguno de los problemas de clasificación pero no se descarta una investigación posterior en este asunto pues el cambio de estrategia de sampleo puede resultar en mejoras (aunque marginales) del \textit{performance} de la red. 
+
+\vspace{0.2cm}
+
+Para la red propuesta \textit{DPP NET} tampoco se tuvieron resultados destacables, principalmente pues el entrenamiento del \textit{Autoencoder} requiere de una mayor cantidad de iteraciones en comparación a la red encargada de la clasificación. De todas formas, se proponen distintas líneas de investigación con respecto a esta metodología que podrían resultar en arquitecturas de entrenamiento paralelo más eficientes. 
+
+\vspace{0.2cm}
+
+Finalmente, la utilización de los DPP fue gracias al uso de redes que aprendían representaciones de baja dimensionalidad de los datos y que a posteriori permitirían definir métricas de distancia (o similitud) para hacer que el sampleo con DPP fuera más preciso. Se mostró que la representación de un \textit{Autoencoder} y el aprendizaje de la métrica con \textit{Oneshot} permiten sampleos que representan con mayor frecuencia a la clase minoritaria (con respecto al método uniforme) y cómo otras métricas fallaban en esta tarea debido a la maldición de la dimensionalidad. 
+
+\vspace{0.2cm}
+
+Con lo anterior mencionado, se corroboran las hipótesis del trabajo y se cumplen los objetivos generales y particulares propuestos para esta tesis. 
+
+\section{Trabajo a Futuro}
+
+Con el objetivo de complementar el trabajo presentado con ideas que no fueron probadas pero que podrían ser perfectamente objeto de trabajo futuro, se detalla una lista de posibles rutas y métodos que podrían resultar en mejoras a los resultados presentados:
+
+\begin{enumerate}
+
+    \item Parámetros: Validar los parámetros sobre los cuales los métodos aún continúan funcionando, por ejemplo, probar hasta qué punto el aumento del \textit{batch size} mantiene los resultados mostrados sin perjudicar el tiempo de sampling del DPP. También se puede estudiar cuántas épocas de inicialización con \textit{Mixed DPP} son óptimas para el rendimiento de la red. 
+    
+    \item Optimización DPP: Si bien la complejidad de los DPP es de $O(Nk^3)$, la implementación utilizada en esta tesis pudo haber sido más óptima al programar los métodos en algún lenguaje de programación con un compilado más rápido como \href{https://es.wikipedia.org/wiki/C\%2B\%2B}{C++}. Por otro lado, existen implementaciones en la literatura que aproximan los DPP mediante el uso de MCMC como lo detalla \cite{https://doi.org/10.48550/arxiv.1602.05242} y que tienen una complejidad considerablemente menor.
+    
+    \item Reducción de Dimensionalidad: En esta tesis se utilizaron 2 métodos para reducir la dimensionalidad de los datos, las redes \textit{Autoencoder} y \textit{Oneshot}. Existen técnicas clásicas para reducir la dimensión de los datos, PCA, TSNE, UMAP, entre otras. La propuesta es implementar las redes propuestas en esta tesis pero utilizando la distancia euclidiana (coseno o una \textit{Minkowski} para algún $p$) aplicada sobre estas representaciones como métrica. 
+    
+    \item DPP NET: Esta red no tuvo los resultados esperados pues el \textit{Autoencoder} requiere de múltiples iteraciones y épocas para su entrenamiento. La construcción de una arquitectura que implemente una red \textit{Oneshot} (que se entrene con \textit{contrastive loss} o incluso \textit{triplet loss}) y su entrenamiento en paralelo podría reducir este problema y mostrar resultados favorables. 
+    
+    \item Nuevos Datasets: Los resultados fueron mostrados en una cantidad aún acotada de ejemplos y con una tipología de datos en específico (imágenes). Se propone iterar este trabajo con nuevos datasets y problemas, por ejemplo, en series de tiempo, se pueden aplicar las metodologías de esta tesis y comparar con otras derivadas de la métrica \textit{Dynamic Time Warping} (DTW) que funciona bien con este tipo de datos. 
+    
+    \item Cambios de Estrategia de Sampleo: La idea fundamental detrás de \textit{Reversed Mixed DPP} era la de cambiar la estrategia de sampleo (al usar un DPP) cuando la \textit{loss} ya no estaba teniendo variaciones de valor. Esta idea tiene mucho potencial pero se vio perjudicada pues \textit{Fast DPP} no entrena con todos los datos y los cambios incluso empeoraban el \textit{performance}. La propuesta es investigar acerca de estrategias de sampleo alternativas que se puedan implementar cuando un método estándar (SGD con sampleo uniforme) ya no disminuya considerablemente la \textit{loss} en las iteraciones.  
+    
+\end{enumerate}

@@ -1,0 +1,176 @@
+% Template:     Tesis LaTeX
+% Documento:    Archivo principal
+% Versión:      3.1.9 (24/07/2022)
+% Codificación: UTF-8
+%
+% Autor: Pablo Pizarro R.
+%        pablo@ppizarror.com
+%
+% Manual template: [https://latex.ppizarror.com/tesis]
+% Licencia MIT:    [https://opensource.org/licenses/MIT]
+
+% CREACIÓN DEL DOCUMENTO
+\documentclass[
+	spanish, % Idioma: spanish, english, etc.	
+	letterpaper, oneside
+]{book}
+
+% INFORMACIÓN DEL DOCUMENTO
+
+%\def\documenttitle {Procesos Puntuales Determinantales en la selección de Mini Batches para el entrenamiento de Redes Neuronales mediante descenso de gradiente estocástico}
+
+%\def\documenttitle{Estrategias de selección de Mini Bathes para el entrenamiento de Redes Neuronales mediante descenso de gradiente estocástico utilizando Procesos Puntuales Determinantales}
+
+\def\documenttitle{Estrategias de selección de Mini Batches utilizando Procesos Puntuales Determinantales para el entrenamiento de Redes Neuronales mediante descenso de gradiente estocástico}
+
+\def\documentsubtitle {}
+\def\degreetitle {
+	Tesis para optar al grado de magíster en Ciencia de Datos
+	\bigbreak\vspace{0.3cm}
+	Memoria para optar al título de ingeniero civil matemático
+}
+
+\def\universityname {Universidad de Chile}
+\def\universityfaculty {Facultad de Ciencias Físicas y Matemáticas}
+\def\universitydepartment {Departamento de Postgrado y Postítulo}
+\def\universitydepartmentimage {departamentos/uchile2}
+\def\universitydepartmentimagecfg {height=3cm}
+\def\universitylocation {Santiago de Chile}
+
+% INTEGRANTES, PROFESORES Y FECHAS
+\def\documentauthor {Nelson Bruno Andrés Moreno Cabañas}
+\def\documentdate {\the\year}
+
+\def\portrait {
+\begin{center}
+	\vspace{1.5cm} ~ \\
+	\MakeUppercase{\textbf{\documenttitle}} ~ \\
+	\vspace{1.5cm}
+	\MakeUppercase{\degreetitle} ~ \\
+	\vfill
+	\begin{tabular}{c}
+		\MakeUppercase{\documentauthor} \\
+		\vspace{1.0cm} \\
+		PROFESOR GUÍA: \\
+		Felipe Tobar \\
+		\vspace{0.5cm} \\
+		MIEMBROS DE LA COMISIÓN: \\
+		Daniel Remenik \\
+		PROFESOR 3 \\
+		\vspace{0.5cm} \\
+		Este trabajo ha sido parcialmente financiado por: \\
+		Proyecto Fondecyt regular 1210606 \\
+		\vspace{0.5cm} \\
+		\MakeUppercase{\universitylocation} \\
+		\MakeUppercase{\documentdate}
+	\end{tabular}
+\end{center}
+}
+\def\abstracttable { % Para activar, cambiar configuración \showabstracttable
+\begin{tabular}{l}
+	RESUMEN DE LA MEMORIA PARA OPTAR \\
+	AL TÍTULO DE MAGÍSTER EN CIENCIAS \\
+	DE DATOS \\
+	POR: \MakeUppercase{\documentauthor} \\
+	FECHA: \MakeUppercase{\documentdate} \\
+	PROF. GUÍA: FELIPE TOBAR
+\end{tabular}}{
+}
+
+% IMPORTACIÓN DEL TEMPLATE
+\input{template}
+
+% INICIO DE LAS PÁGINAS
+\begin{document}
+	
+% PORTADA
+\templatePortrait
+
+% CONFIGURACIÓN DE PÁGINA Y ENCABEZADOS
+\templatePagecfg
+
+% RESUMEN O ABSTRACT
+\begin{abstractd}
+
+Se proponen tres metodologías para el entrenamiento de redes neuronales utilizando un proceso repulsivo conocido como Proceso Puntual Determinantal (DPP) cuya función es la de permitir que los \textit{mini batch} sampleados en cada iteración del entrenamiento tengan la mayor diversidad posible según alguna métrica de distancia. Esta métrica es definida como una distancia euclidiana aplicada sobre una representación de baja dimensionalidad de los datos obtenida a partir del entrenamiento previo de un \textit{Autoencoder} o una red \textit{Oneshot}. La primera arquitectura denominada \textit{Fast DPP} resuelve el problema del alto costo computacional que requiere utilizar un DPP filtrando aquellos ejemplos poco relevantes. La segunda arquitectura, \textit{Mixed DPP}, combina el entrenamiento estándar (sampleo uniforme) con una inicialización mediante \textit{Fast DPP}. Finalmente, la tercera arquitectura plantea el entrenamiento en paralelo de un \textit{Autoencoder} necesario para la definición de la métrica y la red encargada de resolver el problema principal. Se prueban las arquitecturas en un problema de clasificación binaria con un \textit{dataset} artificial en dos dimensiones y uno de clasificación multiclase con \textit{Fashion MNIST}. Los resultados muestran que la red \textit{Fast DPP} tiene un mejor rendimiento en los primeros 30 segundos de entrenamiento que un método estándar (\textit{baseline}) en el problema de clasificación multiclase y la red \textit{Mixed DPP} alcanza un rendimiento similar al método estándar pero en menor tiempo. La importancia de este trabajo radica en la apertura de nuevas posibilidades de entrenamiento con sampleo activo mediante un proceso repulsivo tan estudiado como los DPP y además, aporta en el estudio de métricas de distancia en problemas de alta dimensionalidad con un enfoque en el entrenamiento de redes neuronales.
+
+\end{abstractd}
+
+% DEDICATORIA
+\begin{dedicatory}
+	Para mi madre, mi hermana y mi padre, que en paz descanse. \\
+\end{dedicatory}
+
+% AGRADECIMIENTOS
+\begin{acknowledgments}
+
+En primer lugar, agradezco a mi familia, mi hermana Nicole que siempre me ha brindado su apoyo incondicional y ha sido parte de todas las decisiones de mi vida, estoy tremendamente agradecido de ser tu hermano. A mi madre Gloria, que ha sido y seguirá siendo el pilar fundamental de mi vida, sin ti, no sería ni la mitad de la persona que soy el día de hoy y es por eso que te dedico mis logros, mis sueños y metas, muchísimas gracias. Finalmente, agradezco eternamente a mi padre que lamentablemente no podrá ver la culminación de mi carrera, pero de la que sé, estaría tremendamente orgulloso. Viejito, donde quiera que te encuentres, esto es para ti. 
+
+\vspace{0.2cm}
+
+Me gustaría agradecer al profesor Felipe Tobar por su guía durante el magíster y todas las instancias en que nos encontramos durante mi estadía en la universidad. Definitivamente, una persona comprometida con la formación de los estudiantes y que no dudó en ayudarme ni una sola vez, mil gracias. Agradezco también a todos los tesistas a cargo de Felipe, sin su aporte, el desarrollo de esta tesis nunca pudo haber sido llevado a cabo. Agradezco además al proyecto Fondecyt regular 1210606 por haber financiado el costo del magíster durante el año 2022.
+
+\vspace{0.2cm}
+
+Agradezco a mis amigos de las U por hacer más ameno el paso por la carrera y por todos los buenos momentos compartidos. Agradezco también a mis amigos del colegio por estar siempre presentes y apoyándome en lo que necesitara, son lo más grande!. 
+
+\vspace{0.2cm}
+
+Finalmente, me gustaría agradecer a la persona que más cerca ha visto este proceso, mi pareja Karin. Sin su amor incondicional, su paciencia y la motivación que me entregó, jamás podría haber completado esta tesis. Estoy tremendamente agradecido por todas la veces que me levantaste cuando no me vi capaz, marcaste una época en mi vida que jamás olvidaré y es por esto que comparto este logro contigo, te amo. 
+
+
+\end{acknowledgments}
+
+% TABLA DE CONTENIDOS - ÍNDICE
+\templateIndex
+
+% CONFIGURACIONES FINALES
+\templateFinalcfg
+
+% ======================= INICIO DEL DOCUMENTO =======================
+
+\chapter{Introducción}
+\input{introduccion}
+
+
+\newpage
+\chapter{Marco Teórico}
+\input{marco_teorico}
+
+
+\chapter{Estado del Arte}
+\input{estado_del_arte}
+
+
+\newpage
+\chapter{Metodología}
+\input{metodologia}
+
+
+\newpage 
+\chapter{Resultados y Análisis}
+\input{resultados}
+
+
+\newpage
+\chapter{Conclusiones}
+\input{conclusiones}
+
+
+\bibliography{library}
+
+\newpage
+\input{Anexo}
+
+
+% ------------------------------------------------------------------------------
+% ANEXO
+% Existe adicionalmente el entorno \begin{appendixd} que permite insertar
+% \chapter y el entorno \begin{appendixdtitle}[style1] (4 estilos diferentes),
+% el cual acepta \chapter y escribe el título de anexos encima
+% ------------------------------------------------------------------------------
+
+% \input{example} % Ejemplo, se puede borrar
+
+% FIN DEL DOCUMENTO
+\end{document}
