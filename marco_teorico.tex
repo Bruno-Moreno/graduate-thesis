@@ -238,16 +238,16 @@ donde $f: \mathbb{R} \rightarrow \mathbb{R}$ es una función usualmente no linea
 
 \vspace{0.2cm}
 
-Los modelos más comunes de redes neuronales se conocen como \textit{feedforward neural networks} (FFNN) o \textit{multilayer perceptrons} (MLPs) y están compuestos por múltiples perceptrones interconectados en una estructura de capas como lo muestra la Figura (\ref{fig:MLPs})
+Los modelos más comunes de redes neuronales se conocen como \textit{feedforward neural networks} (FFNN) o \textit{multilayer perceptrons} (MLPs) y están compuestos por múltiples perceptrones interconectados en una estructura de capas como lo muestra la Figura \ref{fig:MLPs}
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=10cm]{img/tesis/MLPs.png}
-    \caption{MLPs de profundidad $l$ y cantidad de neuronas por capa $k_l$.}
+    \includegraphics[width=7cm]{img/tesis/MLPs.png}
+    \caption{MLP con 2 capas ocultas de pesos $W^{(i)}$ y funciones de activación $f^{(i)}$. Además, incluye una capa de output con función de activación $g$ y pesos $U$. No se agrega un vector de \textit{bias}. }
     \label{fig:MLPs}
 \end{figure}
 
-\noindent el \textit{output} de cada capa $h^{(k)} = (h^{(k)}_1 , h^{(k)}_2 , \dots , h^{(k)}_{k_k})$ se puede describir mediante 
+\noindent el \textit{output} de cada capa $h^{(k)} = (h^{(k)}_1 , h^{(k)}_2 , \dots , h^{(k)}_{w(k)})$ con $w(k)$ el ancho (cantidad de neuronas) de la capa $k$, se puede describir mediante 
 \[
 h^{(k)} = f^{(k)}(h^{(k-1)}W^{(k)}  + b^{(k)} ), \quad \forall k \in \{ 1 , \dots , l \} , \quad h^{(0)} = x ,   
 \]
@@ -255,7 +255,7 @@ donde $l$ es la profundidad de la red, $W$ la matriz de pesos y $b$ el vector de
 \[
 \hat{y} = g(h^{(l)}U + c ) , 
 \]
-donde $g$ es la función aplicada en la capa de \textit{output} y cambia según el tipo de problema que se quiera resolver, ya sea de clasificación o regresión. 
+donde $c$ es un vector de bias, $U$ una matriz de pesos y $g$ es la función aplicada en la capa de \textit{output} que cambia según el tipo de problema que se quiera resolver, ya sea de clasificación o regresión. 
 
 \subsection{Descenso del Gradiente Estocástico} 
 
@@ -278,10 +278,9 @@ Entre los algoritmos utilizados para la minimización de la función de error $l
 \begin{figure}[h]
     \centering
     \includegraphics[width=10cm]{img/tesis/SGD.png}
-    \caption{Tipos de Descenso del Gradiente.}
+    \caption{Representación de distintos tipos de descensos del gradiente según el tamaño del \textit{Batch} (Wash 2022) \cite{GradientDescent}.}
     \label{fig:SGD}
 \end{figure}
-
 
 Nos centraremos en este último pues es uno de los más utilizados para el entrenamiento de redes neuronales debido a su rapidez y capacidad de convergencia superior a otros métodos \cite{WILSON20031429}, \cite{article}.
 
@@ -362,7 +361,7 @@ El entrenamiento de este tipo de redes puede ser realizado de múltiples formas 
     \begin{figure}[h]
     \centering
     \includegraphics[width=8cm]{img/tesis/triplet_loss.jpeg}
-    \caption{Triplet Loss: La imagen \textit{Anchor} se compara con una imagen de misma etiqueta (\textit{Positive}) y una de distinta etiqueta (\textit{Negative}).}
+    \caption{Triplet Loss: La imagen \textit{Anchor} se compara con una imagen de misma etiqueta (\textit{Positive}) y una de distinta etiqueta (\textit{Negative}) (Ghandi 2018) \cite{TripletLoss}.}
     \label{fig:triplet_loss}
     \end{figure}
     
