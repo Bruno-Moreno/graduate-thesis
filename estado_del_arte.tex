@@ -57,13 +57,13 @@ con $B$ sampleado a través de un proceso repulsivo $\mathcal{P}$. Entonces
 \] donde $g(x,\theta) = \grad l(f(x, \theta))$, $\lambda(x)$ la cantidad de puntos esperada alrededor de $x$, $\rho(x,y)$ la cantidad de puntos esperada alrededor de $x$ e $y$, $\nu \times \nu \subset \mathbb{R}^n \times \mathbb{R}^n$ la grilla considerada y $k = |B|$ el tamaño del \textit{mini-batch}.
 \end{teo}
 
-La demostración se incluye en el anexo (\hyperlink{Teorema .4}{Teorema .4}). Los 2 puntos importantes en este resultado son que 
+La demostración se incluye en el anexo (\hyperlink{Teorema B.4}{Teorema B.4}). Los 2 puntos importantes en este resultado son que 
 \begin{enumerate}
     \item El primer término de $\mathbb{V}ar(\hat{G})$ es negativo para cualquier proceso repulsivo.
     \item El primer término desaparece cuando se utiliza un método de sampleo uniforme (como en el SGD estándar) pues $\rho(x,y) = \lambda(x)\lambda(y)$. 
 \end{enumerate}
 
-Con ambas propiedades en mente (\hyperlink{Corolario .1}{Corolario .1}), se puede concluir que un proceso repulsivo disminuye la varianza del estimador del gradiente objetivo y por tanto la convergencia al óptimo se puede realizar de forma mucho más rápida (por ejemplo, aumentando el valor del \textit{learning rate}).
+Con ambas propiedades en mente (\hyperlink{Corolario B.1}{Corolario B.1}), se puede concluir que un proceso repulsivo disminuye la varianza del estimador del gradiente objetivo y por tanto la convergencia al óptimo se puede realizar de forma mucho más rápida (por ejemplo, aumentando el valor del \textit{learning rate}).
 
 \section{Oportunidad de Mejora}
 

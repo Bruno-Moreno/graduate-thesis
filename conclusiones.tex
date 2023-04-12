@@ -1,10 +1,10 @@
 \section{Comentarios}
 
-Como se mostró en el desarrollo de esta tesis, las metodologías \textit{Fast DPP} y su posterior modificación \textit{Mixed DPP} permiten realizar el entrenamiento de una red neuronal de una manera más óptima que la metodología actual con sampleo uniforme. Mediante el uso de \textit{Fast DPP}, es posible utilizar un Proceso Puntual Determinantal (DPP) incluso con el tiempo elevado de sampleo que este posee. Los resultados mostraron que para un conjunto de datos de dimensión elevada, durante los primeros 30 segundos de entrenamiento, la red \textit{Fast DPP} mostraba un mejor desempeño que un \textit{baseline} de sampleo uniforme y haciendo uso de esto, se planteó \textit{Mixed DPP} para combinar las estrategias y resultar en una red de mejor rendimiento. 
+En esta tesis se ha mostrado que las metodologías \textit{Fast DPP} y su modificación posterior, conocida como \textit{Mixed DPP}, permiten acelerar el proceso de entrenamiento de una red neuronal sin comprometer su rendimiento. Mediante el uso de \textit{Fast DPP}, fue posible aplicar un Proceso Puntual Determinantal (DPP) incluso con su tiempo de muestreo elevado, y los resultados mostraron que en conjuntos de alta dimensión, la metodología \textit{Fast DPP} supera en rendimiento a una red de referencia con muestreo uniforme durante los primeros 30 segundos de entrenamiento. Este resultado impulsó el desarrollo de \textit{Mixed DPP}, que haciendo uso de esta herramienta en las primeras épocas de entrenamiento, logra alcanzar el rendimiento final esperado de la red en un tiempo considerablemente menor como lo muestra la Figura \ref{fig:nd_mixed_dpp}.
 
 \vspace{0.2cm}
 
-Por otro lado, para el conjunto de clasificación binario, el resultado anterior no se tenía pues la dimensión del conjunto de entrenamiento era baja y la red poco profunda, resultando en que el uso de un DPP aumentara el tiempo de entrenamiento. Si se comparan los resultados en términos de épocas, la metodología \textit{Mixed DPP} mostró mejores resultados que una metodología \textit{baseline}.
+Por otro lado, para el conjunto de clasificación binario, el resultado anterior no era cierto pues la dimensión del conjunto de entrenamiento era baja y la red poco profunda, resultando en que el uso de un DPP aumentara el tiempo de entrenamiento. Si se comparan los resultados en términos de épocas, para este conjunto de datos, la metodología \textit{Mixed DPP} mostró mejores resultados que una metodología \textit{baseline}.
 
 \vspace{0.2cm}
 
@@ -12,11 +12,11 @@ Con respecto a la modificación \textit{Reversed Mixed DPP}, esta no mostró res
 
 \vspace{0.2cm}
 
-Para la red propuesta \textit{DPP NET} tampoco se tuvieron resultados destacables, principalmente pues el entrenamiento del \textit{Autoencoder} requiere de una mayor cantidad de iteraciones en comparación a la red encargada de la clasificación. De todas formas, se proponen distintas líneas de investigación con respecto a esta metodología que podrían resultar en arquitecturas de entrenamiento paralelo más eficientes. 
+Para la red propuesta \textit{DPP NET} tampoco se tuvieron resultados destacables, principalmente pues el entrenamiento del \textit{Autoencoder} requiere de una mayor cantidad de iteraciones en comparación a la red encargada de la clasificación. De todas formas, se proponen distintas líneas de investigación con respecto a esta metodología que podrían resultar en arquitecturas de entrenamiento en paralelo más eficientes. 
 
 \vspace{0.2cm}
 
-Finalmente, la utilización de los DPP fue gracias al uso de redes que aprendían representaciones de baja dimensionalidad de los datos y que a posteriori permitirían definir métricas de distancia (o similitud) para hacer que el sampleo con DPP fuera más preciso. Se mostró que la representación de un \textit{Autoencoder} y el aprendizaje de la métrica con \textit{Oneshot} permiten sampleos que representan con mayor frecuencia a la clase minoritaria (con respecto al método uniforme) y cómo otras métricas fallaban en esta tarea debido a la maldición de la dimensionalidad. 
+Finalmente, el uso de redes que aprenden representaciones de baja dimensionalidad de los datos y que a posteriori permiten definir métricas de distancia (o similitud), fueron cruciales para que el muestreo de los DPP fuera preciso y no se viera afectado por la maldición de la dimensionalidad, como ocurre con la distancia euclidiana. En particular, se mostró que la representación de un \textit{Autoencoder} y el aprendizaje de la métrica con \textit{Oneshot} utilizada sobre los DPP, permiten obtener muestreos más representativos de las diferencias intra-clase y entre-clases en comparación a un muestreo uniforme. 
 
 \vspace{0.2cm}
 

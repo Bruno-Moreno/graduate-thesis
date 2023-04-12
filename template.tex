@@ -52,6 +52,7 @@
 % Manejo de condicionales
 \usepackage{iftex}
 \usepackage{ifthen}
+\usepackage{amsthm}
 
 % Verifica el tipo de compilador
 \ifPDFTeX
@@ -6366,6 +6367,50 @@
 \theoremstyle{templatetheorem}
 
 % Configura números
+%\ifthenelse{\equal{\showsectioncaptionmat}{none}}{
+%	\newtheorem{defn}{\namemathdefn}
+%	\newtheorem{teo}{\namemaththeorem}
+%	\newtheorem{cor}{\namemathcol}
+%	\newtheorem{lema}{\namemathlem}
+%	\newtheorem{prop}{\namemathprp}
+%}{
+%\ifthenelse{\equal{\showsectioncaptionmat}{chap}}{
+%	\newtheorem{defn}{\namemathdefn}[chapter]
+%	\newtheorem{teo}{\namemaththeorem}[chapter]
+%	\newtheorem{cor}{\namemathcol}[chapter]
+%	\newtheorem{lema}{\namemathlem}[chapter]
+%	\newtheorem{prop}{\namemathprp}[chapter]
+%}{
+%\ifthenelse{\equal{\showsectioncaptionmat}{sec}}{
+%	\newtheorem{defn}{\namemathdefn}[section]
+%	\newtheorem{teo}{\namemaththeorem}[section]
+%	\newtheorem{cor}{\namemathcol}[section]
+%	\newtheorem{lema}{\namemathlem}[section]
+%	\newtheorem{prop}{\namemathprp}[section]
+%}{
+%\ifthenelse{\equal{\showsectioncaptionmat}{ssec}}{
+%	\newtheorem{defn}{\namemathdefn}[subsection]
+%	\newtheorem{teo}{\namemaththeorem}[subsection]
+%	\newtheorem{cor}{\namemathcol}[subsection]
+%%	\newtheorem{lema}{\namemathlem}[subsection]
+%	\newtheorem{prop}{\namemathprp}[subsection]
+%}{
+%\ifthenelse{\equal{\showsectioncaptionmat}{sssec}}{
+%	\newtheorem{teo}{\namemaththeorem}[subsubsection]
+%	\newtheorem{cor}{\namemathcol}[subsubsection]
+%	\newtheorem{lema}{\namemathlem}[subsubsection]
+%	\newtheorem{prop}{\namemathprp}[subsubsection]
+%}{
+%\ifthenelse{\equal{\showsectioncaptionmat}{ssssec}}{
+%	\newtheorem{defn}{\namemathdefn}[subsubsubsection]
+%	\newtheorem{teo}{\namemaththeorem}[subsubsubsection]
+%	\newtheorem{cor}{\namemathcol}[subsubsubsection]
+%	\newtheorem{lema}{\namemathlem}[subsubsubsection]
+%	\newtheorem{prop}{\namemathprp}[subsubsubsection]
+%}{
+%	\throwbadconfig{Valor configuracion %incorrecto}{\showsectioncaptionmat}{none,chap,sec,ssec,sssec,ssssec}}}}}}
+%}
+
 \ifthenelse{\equal{\showsectioncaptionmat}{none}}{
 	\newtheorem{defn}{\namemathdefn}
 	\newtheorem{teo}{\namemaththeorem}
@@ -6375,8 +6420,8 @@
 }{
 \ifthenelse{\equal{\showsectioncaptionmat}{chap}}{
 	\newtheorem{defn}{\namemathdefn}[chapter]
-	\newtheorem{teo}{\namemaththeorem}[chapter]
-	\newtheorem{cor}{\namemathcol}[chapter]
+	\newtheorem{teo}{\namemaththeorem}[section]
+	\newtheorem{cor}{\namemathcol}[section]
 	\newtheorem{lema}{\namemathlem}[chapter]
 	\newtheorem{prop}{\namemathprp}[chapter]
 }{
@@ -6389,27 +6434,29 @@
 }{
 \ifthenelse{\equal{\showsectioncaptionmat}{ssec}}{
 	\newtheorem{defn}{\namemathdefn}[subsection]
-	\newtheorem{teo}{\namemaththeorem}[subsection]
-	\newtheorem{cor}{\namemathcol}[subsection]
+	\newtheorem{teo}{\namemaththeorem}[section]
+	\newtheorem{cor}{\namemathcol}[section]
 	\newtheorem{lema}{\namemathlem}[subsection]
 	\newtheorem{prop}{\namemathprp}[subsection]
 }{
 \ifthenelse{\equal{\showsectioncaptionmat}{sssec}}{
 	\newtheorem{defn}{\namemathdefn}[subsubsection]
-	\newtheorem{teo}{\namemaththeorem}[subsubsection]
-	\newtheorem{cor}{\namemathcol}[subsubsection]
+	\newtheorem{teo}{\namemaththeorem}[section]
+	\newtheorem{cor}{\namemathcol}[section]
 	\newtheorem{lema}{\namemathlem}[subsubsection]
 	\newtheorem{prop}{\namemathprp}[subsubsection]
 }{
 \ifthenelse{\equal{\showsectioncaptionmat}{ssssec}}{
 	\newtheorem{defn}{\namemathdefn}[subsubsubsection]
-	\newtheorem{teo}{\namemaththeorem}[subsubsubsection]
-	\newtheorem{cor}{\namemathcol}[subsubsubsection]
+	\newtheorem{teo}{\namemaththeorem}[section]
+	\newtheorem{cor}{\namemathcol}[section]
 	\newtheorem{lema}{\namemathlem}[subsubsubsection]
 	\newtheorem{prop}{\namemathprp}[subsubsubsection]
 }{
 	\throwbadconfig{Valor configuracion incorrecto}{\showsectioncaptionmat}{none,chap,sec,ssec,sssec,ssssec}}}}}}
 }
+
+
 \theoremstyle{templateobs}
 \newtheorem*{ej}{\namemathej}
 \newtheorem*{obs}{\namemathobs}

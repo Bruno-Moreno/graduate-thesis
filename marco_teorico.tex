@@ -64,7 +64,7 @@ con $L_Y$ la restricción de $L$ a los índices de $Y$. Lo anterior define de fo
 
 \vspace{0.2cm}
 
-Es posible probar que la constante de proporcionalidad viene dada por $\frac{1}{\det(L + I)}$ con $I$ la matriz identidad con las mismas dimensiones de $L$ (\hyperlink{Teorema .1}{Teorema .1}). Por otro lado, obtener la matriz $K$ a través de $L$ es posible mediante la ecuación (\hyperlink{Teorema .2}{Teorema .2})
+Es posible probar que la constante de proporcionalidad viene dada por $\frac{1}{\det(L + I)}$ con $I$ la matriz identidad con las mismas dimensiones de $L$ (\hyperlink{Teorema B.1}{Teorema B.1}). Por otro lado, obtener la matriz $K$ a través de $L$ es posible mediante la ecuación (\hyperlink{Teorema B.2}{Teorema B.2})
 \[
 K = L(L+I)^{-1} = I - (L+I)^{-1} , 
 \]
@@ -125,7 +125,7 @@ es una descomposición en valores y vectores propios de $C$ si y solamente si
 \[
 L = \sum_{i=1}^D \lambda_n \left ( \frac{1}{\sqrt{\lambda_n}}B^{\top}\hat{v}_n\right ) \left ( \frac{1}{\sqrt{\lambda_n}}B^{\top}\hat{v}_n\right )^{\top},
 \]
-es una descomposición en valores y vectores propios de $L$ (\hyperlink{Teorema .3}{Teorema .3}). La idea es representar $V$, el conjunto de vectores en $\mathbb{R}^N$ como el conjunto $\hat{V}$ de vectores en $\mathbb{R}^D$ utilizando el mapeo
+es una descomposición en valores y vectores propios de $L$ (\hyperlink{Teorema B.3}{Teorema B.3}). La idea es representar $V$, el conjunto de vectores en $\mathbb{R}^N$ como el conjunto $\hat{V}$ de vectores en $\mathbb{R}^D$ utilizando el mapeo
 \[
 V = \left \{ B^{\top}\hat{v} \hspace{0.1cm} | \hspace{0.1cm} \hat{v} \in \hat{V} \right \},
 \]
@@ -138,7 +138,7 @@ que cumple que si $v_1 = B^{\top}\hat{v}_1$ y $v_2 = B^{\top}\hat{v}_2$, entonce
 Lo anterior, permite calcular el producto entre $v_1$ y $v_2$ en términos de vectores y matrices con dimensión en $D$, reduciendo la complejidad a $O(D^2)$, por ejemplo, cuando se realiza la normalización en el algoritmo de \textit{Grand-Schmidt} realizando la actualización de $v = B^{\top}\hat{v}$ implícitamente con la actualización de $\hat{v} \gets \frac{\hat{v}}{\sqrt{\hat{v}^{\top}C\hat{v}}}$.
 
 \begin{algorithm}
-\caption{Sampling de un DPP $O(NDk^2 + D^2k^3)$      , $k = |\hat{V}|$}\label{alg:alg2}
+\caption{Muestreo de un DPP $O(NDk^2 + D^2k^3)$      , $k = |\hat{V}|$}\label{alg:alg2}
 \begin{algorithmic}
 \Require Descomposición en valores y vectores propios 
 $\{(\hat{v}_n , \lambda_n)\}_{n}$ de C
@@ -190,7 +190,7 @@ es decir, no es posible samplear un par de ejemplos a una distancia menor de $r$
 El algoritmo que permite samplear de un \textit{Poisson Disk Sampling} (PDS) es el siguiente 
 
 \begin{algorithm}
-\caption{Sampling de un PDS $O(k^2)$, $k$ tamaño del sampling}\label{alg:alg3}
+\caption{Muestreo de un PDS $O(k^2)$, $k$ tamaño de la muestra}\label{alg:alg3}
 \begin{algorithmic}
 \Require Distancia mínima $r$, conjunto de ejemplos $\{x_i\}_{i=0}^N$
 
@@ -240,7 +240,7 @@ donde $f: \mathbb{R} \rightarrow \mathbb{R}$ es una función usualmente no linea
 
 Los modelos más comunes de redes neuronales se conocen como \textit{feedforward neural networks} (FFNN) o \textit{multilayer perceptrons} (MLPs) y están compuestos por múltiples perceptrones interconectados en una estructura de capas como lo muestra la Figura \ref{fig:MLPs}
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=7cm]{img/tesis/MLPs.png}
     \caption{MLP con 2 capas ocultas de pesos $W^{(i)}$ y funciones de activación $f^{(i)}$. Además, incluye una capa de output con función de activación $g$ y pesos $U$. No se agrega un vector de \textit{bias}. }
@@ -275,7 +275,7 @@ Entre los algoritmos utilizados para la minimización de la función de error $l
     
 \end{itemize}
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=10cm]{img/tesis/SGD.png}
     \caption{Representación de distintos tipos de descensos del gradiente según el tamaño del \textit{Batch} (Wash 2022) \cite{GradientDescent}.}
@@ -318,7 +318,7 @@ donde $x$ es el \textit{input} a convolucionar, $w$ es el kernel con parámetros
 Un \textit{Autoencoder} es un tipo de red neuronal que busca replicar en el \textit{output} el \textit{input} entregado. El desafío es que esto se pueda realizar a partir de una representación de menor dimensionalidad que el \textit{input} a través de un cuello de botella en la arquitectura de la red \cite{Zhang2018ABA}.
 
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=10cm]{img/tesis/autoencoder.png}
     \caption{Autoencoder, el cuello de botella en la mitad de la estructura codifica una representación de menor dimensionalidad del \textit{input} (Zhang 2018).}
@@ -335,7 +335,7 @@ Este tipo de red, que si bien su estructura podría ser del tipo FFNN o CNN, no 
 
 \textit{One Shot Learning} o (\textit{Few Shot Learning}) es un método de aprendizaje de máquinas utilizado comúnmente en el área de visión computacional y que busca reducir drásticamente la cantidad de ejemplos necesarios para clasificar objetos \cite{OMAHONY2019186}.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=8cm]{img/tesis/siamese.png}
     \caption{Arquitectura One Shot Learning, los \textit{batches} de entrenamiento se componen de tuplas de ejemplos que son entregados en cada sección de la red.}
@@ -356,19 +356,20 @@ El entrenamiento de este tipo de redes puede ser realizado de múltiples formas 
     \]
     Donde $z_i$ y $z_j$ son la representación de los ejemplos $x_i$ y $x_j$ respectivamente. Notar la similitud con una función \textit{Softmax} a la que además se le agrega un factor de normalización (temperatura) $\tau$. La función $d(\cdot, \cdot)$ es alguna métrica de distancia previamente  definida como una distancia coseno o una distancia euclidiana. 
     
-    \item \textit{Triplet Loss}: Esta función de pérdida se calcula entre tripletas de ejemplos. La idea es tener para cada \textit{Anchor} una imagen similar (\textit{Positive}) y una imagen completamente distinta (\textit{Negative}).
+    \item \textit{Triplet Loss}: Esta función de pérdida se calcula entre tripletas de ejemplos lo que permite que el entrenamiento se pueda hacer con muy pocos datos. Para cada imagen base, denominada \textit{Anchor}, se escoge una imagen de la misma clase (\textit{Positive}) y una de distinta clase (\textit{Negative}).
     
-    \begin{figure}[h]
+    \begin{figure}[ht]
     \centering
     \includegraphics[width=8cm]{img/tesis/triplet_loss.jpeg}
     \caption{Triplet Loss: La imagen \textit{Anchor} se compara con una imagen de misma etiqueta (\textit{Positive}) y una de distinta etiqueta (\textit{Negative}) (Ghandi 2018) \cite{TripletLoss}.}
     \label{fig:triplet_loss}
     \end{figure}
     
-    \noindent La función de \textit{triplet loss} tomará en cuenta estas 2 comparaciones simultáneamente según
+    \noindent La función de \textit{triplet loss} tomará en cuenta estas 2 comparaciones según
     \[
     l(x_a , x_p, x_n) = \max(d(z_a, z_p) - d(z_a, z_n) + \text{margin} , 0) , 
     \]
+    es decir, considerara la capacidad de la red de reconocer imágenes de igual y distinta clase en simultaneo. 
     
     
 \end{itemize}
