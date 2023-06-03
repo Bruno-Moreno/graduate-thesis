@@ -28,8 +28,8 @@ y por tanto, las diagonales con números cercanos a 1, corresponden a elementos 
     K_{ii} & K_{ij} \\ 
     K_{ji} & K_{jj}
     \end{vmatrix} = K_{ii}K_{jj} - K_{ji}K_{ij} = \mathcal{P}(i \in Y)\mathcal{P}(j \in Y) - K_{ij}^2 , 
-	\] 
-es decir, los elementos fuera de la diagonal corresponden a las correlaciones negativas entre pares de elementos.
+	\] es decir, los elementos fuera de la diagonal representan correlaciones entre pares de elementos, entre mayor sea el valor de $K_{ij}^2$, menor será la probabilidad de que $i,j$ aparezcan juntos. Finalmente, dado que $K$ debe ser una matriz definida positiva, es posible probar que $K_{ij}^2 \leq K_{ii}K_{jj}$ y por tanto, lo anterior logra definir una probabilidad. 
+%es decir, los elementos fuera de la diagonal corresponden a las correlaciones negativas entre pares de elementos.
 
 \subsubsection{Aplicaciones }
 
@@ -44,7 +44,7 @@ Existen numerosos casos de uso de los DPP, se mencionan algunos de ellos a conti
     
     \item \textbf{Random Walks No-Intersectantes} \cite{Johansson_2004} 
     
-    Consideremos un conjunto de $k$ caminatas aleatorias simples, independientes, enteras, de largo $T$. Si comienzan de  $x_{1}^{1} , x_{1}^{2} , \dots , x_{1}^{k}$ y no se intersectan en $x_{T}^{1} , x_{T}^{2} , \dots , x_{T}^{k}$. Entonces para cada instante $t$, $x_{t}^{1} , x_{t}^{2} , \dots , x_{t}^{k}$ distribuye como un DPP.
+    Consideremos un conjunto de $k$ caminatas aleatorias simples, independientes, enteras, de largo $T$. Si comienzan de  $x_{1}^{1} , x_{1}^{2} , \dots , x_{1}^{k}$, condicionadas a que no se intersecten y terminen en $x_{T}^{1} , x_{T}^{2} , \dots , x_{T}^{k}$. Entonces para cada instante $t$, $x_{t}^{1} , x_{t}^{2} , \dots , x_{t}^{k}$ distribuye como un DPP.
     
     \item \textbf{Aristas de Spanning Trees Aleatorios. }\cite{https://doi.org/10.48550/arxiv.math/0404048}
     
@@ -58,9 +58,9 @@ Existen numerosos casos de uso de los DPP, se mencionan algunos de ellos a conti
 
 \subsubsection{Sampling}
 
-Antes de definir el algoritmo de sampleo, es útil definir los DPP no a través de su kernel marginal $K$, y más bien por una matriz $L$ que llamamos L-ensamblaje. Esta matriz es tal que 
+Antes de definir el algoritmo de sampleo, es útil definir los DPP no a través de su kernel marginal $K$, y más bien por una matriz $L$ que llamamos L-ensamblaje. Sea $Y$ un conjunto dado e $\textbf{Y}$ un conjunto aleatorio, la matriz de L-ensamblaje es tal que 
 \[ \mathcal{P}_{L}(\textbf{Y} = Y) \propto \det(L_Y) ,  \]
-con $L_Y$ la restricción de $L$ a los índices de $Y$. Lo anterior define de forma atómica la probabilidad de observar el conjunto $\mathbf{Y}$. En este caso, es evidente que $L$ debe ser definida semi-positiva (para que pueda definir una probabilidad) pero gracias a que sólo es una relación de proporcionalidad, no es necesario pedir que la matriz tenga valores propios acotados por 1. 
+con $L_Y$ la restricción de $L$ a los índices de $Y$. Lo anterior define de forma atómica la probabilidad de observar el conjunto $Y$. En este caso, es evidente que $L$ debe ser definida semi-positiva (para que pueda definir una probabilidad) pero gracias a que sólo es una relación de proporcionalidad, no es necesario pedir que la matriz tenga valores propios acotados por 1. 
 
 \vspace{0.2cm}
 
@@ -82,7 +82,7 @@ Notar que no todo kernel marginal define un $L$-ensamblaje, en particular cuando
 Sea $L = \sum_{n=1}^N \lambda_n v_n v_{n}^{\top}$ una descomposición ortonormal de una matriz semidefinida positiva $L$. El siguiente algoritmo samplea $\mathbf{Y} \sim \mathcal{P}_L$.
 
 \begin{algorithm}
-\caption{Muestreo de un DPP $O(Nk^3)$, $k = |V|$}\label{alg:alg1}
+\caption{Muestreo de un DPP $O(Nk^3)$, $k = |V|$ (Kulesza 2012)}\label{alg:alg1}
 \begin{algorithmic}
 \Require Descomposición en valores y vectores propios 
 $\{(v_n , \lambda_n)\}_{n}$ de $L$
@@ -109,15 +109,15 @@ $\{(v_n , \lambda_n)\}_{n}$ de $L$
     \label{fig:example}
 \end{figure}
 
-La demostración de este teorema es extensa y por tanto no incluida en el marco teórico, la complejidad del algoritmo es principalmente causada por la ortonormalización \textit{Grand-Schmidt} $O(Nk^2)$ necesaria para calcular $V_{\perp}$. Por otro lado, existe un algoritmo de sampleo alternativo y más eficiente en situaciones en las que $N$ es grande. 
+La demostración de este teorema es extensa y por tanto no incluida en el marco teórico, la complejidad del algoritmo es principalmente causada por la ortonormalización \textit{Gram-Schmidt} $O(Nk^2)$ necesaria para calcular $V_{\perp}$. Por otro lado, existe un algoritmo de sampleo alternativo y más eficiente en situaciones en las que $N$ es grande. 
 
 \vspace{0.2cm}
 
-Sea $L$ un $L$-ensamblaje y consideremos la descomposición de \textit{Cholesky} $L = B^{\top}B$ con $B \in \mathcal{M}_{D \times N}(\mathbb{R})$ donde $D < N$, se define 
+Sea $L$ un $L$-ensamblaje y consideremos la descomposición de \textit{Cholesky} $L = B^{\top}B$ con $B \in \mathcal{M}_{D \times N}(\mathbb{R})$ donde $D \leq N$, se define 
 \[
 C = BB^{\top}, 
 \]
-por lo que $C \in \mathcal{M}_{D \times D}(\mathbb{R})$, es decir, una matriz de menor dimensión que $L$. El algoritmo de muestreo (Algoritmo \ref{alg:alg2}) a continuación, se basa en el siguiente resultado: 
+por lo que $C \in \mathcal{M}_{D \times D}(\mathbb{R})$, es idealmente, una matriz de menor dimensión que $L$. El algoritmo de muestreo (Algoritmo \ref{alg:alg2}) a continuación, se basa en el siguiente resultado: 
 \[ 
 C = \sum_{i=1}^D \lambda_n\hat{v}_n\hat{v}^{\top}_n.
 \]
@@ -135,10 +135,10 @@ que cumple que si $v_1 = B^{\top}\hat{v}_1$ y $v_2 = B^{\top}\hat{v}_2$, entonce
     v_1^{\top}v_2 & = (B^{\top}\hat{v}_1)^{\top}(B^{\top}\hat{v}_2) \\
     & = \hat{v}_1^{\top}C\hat{v}_2.
 \end{align*}
-Lo anterior, permite calcular el producto entre $v_1$ y $v_2$ en términos de vectores y matrices con dimensión en $D$, reduciendo la complejidad a $O(D^2)$, por ejemplo, cuando se realiza la normalización en el algoritmo de \textit{Grand-Schmidt} realizando la actualización de $v = B^{\top}\hat{v}$ implícitamente con la actualización de $\hat{v} \gets \frac{\hat{v}}{\sqrt{\hat{v}^{\top}C\hat{v}}}$.
+Lo anterior, permite calcular el producto entre $v_1$ y $v_2$ en términos de vectores y matrices con dimensión en $D$, reduciendo la complejidad a $O(D^2)$, por ejemplo, cuando se realiza la normalización en el algoritmo de \textit{Gram-Schmidt} realizando la actualización de $v = B^{\top}\hat{v}$ implícitamente con la actualización de $\hat{v} \gets \frac{\hat{v}}{\sqrt{\hat{v}^{\top}C\hat{v}}}$.
 
 \begin{algorithm}
-\caption{Muestreo de un DPP $O(NDk^2 + D^2k^3)$      , $k = |\hat{V}|$}\label{alg:alg2}
+\caption{Muestreo de un DPP $O(NDk^2 + D^2k^3)$      , $k = |\hat{V}|$ (Kulesza 2012)}\label{alg:alg2}
 \begin{algorithmic}
 \Require Descomposición en valores y vectores propios 
 $\{(\hat{v}_n , \lambda_n)\}_{n}$ de C
@@ -162,7 +162,7 @@ $\{(\hat{v}_n , \lambda_n)\}_{n}$ de C
 
 \subsubsection{k-DPP}
 
-Un proceso puntual determinantal (DPP) asigna una probabilidad a cada subconjunto de $\mathcal{Y}$, es decir, eventualmente puede que un sampleo de este proceso sea un conjunto nulo o incluso todo $\mathcal{Y}$. Con el objetivo de fijar la cardinalidad $k$ del sampling, se puede modificar el Algoritmo \ref{alg:alg2} para samplear exactamente $k$ vectores propios forzando la cardinalidad de $J$. 
+Un proceso puntual determinantal (DPP) asigna una probabilidad a cada subconjunto de $\mathcal{Y}$, es decir, eventualmente puede que un sampleo de este proceso sea un conjunto vacio o incluso todo $\mathcal{Y}$. Con el objetivo de fijar la cardinalidad $k$ del sampling, se puede modificar el Algoritmo \ref{alg:alg2} para samplear exactamente $k$ vectores propios forzando la cardinalidad de $J$. 
 El algoritmo que realiza este proceso, no será detallado, pero es asintóticamente tan rápido el aumentar en $N$ como lo es samplear de un DPP común. 
 
 \subsection{Poisson Disk Sampling}
@@ -190,7 +190,7 @@ es decir, no es posible samplear un par de ejemplos a una distancia menor de $r$
 El algoritmo que permite samplear de un \textit{Poisson Disk Sampling} (PDS) es el siguiente 
 
 \begin{algorithm}
-\caption{Muestreo de un PDS $O(k^2)$, $k$ tamaño de la muestra}\label{alg:alg3}
+\caption{Muestreo de un PDS $O(k^2)$, $k$ tamaño de la muestra (Zhang et al. 2018)}\label{alg:alg3}
 \begin{algorithmic}
 \Require Distancia mínima $r$, conjunto de ejemplos $\{x_i\}_{i=0}^N$
 
@@ -304,6 +304,9 @@ Con la función a minimizar $J(\theta)$ definida, la actualización de los pará
 \]
 donde $B \subset \{1 , \dots , N\}$ es el conjunto de índices del \textit{mini-batch} sampleado según $\mathcal{P}$, normalmente de manera uniforme entre todo el conjunto de entrenamiento que no ha sido visto previamente y $\rho_t$ la tasa de aprendizaje (\textit{learning rate}) del algoritmo en el instante $t$. 
 
+\subsubsection{Épocas de entrenamiento}
+
+En el contexto del \textit{Deep Learning}, las épocas se definen como ciclos de entrenamiento en el que se recorre completamente un conjunto de datos iterando a través de \textit{batchs}. Una mayor cantidad de épocas permite que los modelos aprendan de manera gradual el conjunto sobre el cual se esta entrenando, pero también deben estar acotadas a un número máximo para prevenir el \textit{overfitting} (el sobreajuste no permite generalizar a datos no vistos anteriormente). La elección correcta de las épocas va a depender de la complejidad de los datos, la arquitectura de la red y las características del problema a resolver. 
 
 \subsection{Redes Neuronales Convolucionales}
 
@@ -337,7 +340,7 @@ Este tipo de red, que si bien su estructura podría ser del tipo FFNN o CNN, no 
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=8cm]{img/tesis/siamese.png}
+    \includegraphics[width=7cm]{img/tesis/siamese.png}
     \caption{Arquitectura One Shot Learning, los \textit{batches} de entrenamiento se componen de tuplas de ejemplos que son entregados en cada sección de la red.}
     \label{fig:oneshot}
 \end{figure}

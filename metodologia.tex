@@ -11,11 +11,11 @@ El primer algoritmo de esta sección, que denominaremos \textit{Fast DPP}, es la
     \label{fig:fast_dpp}
 \end{figure}
 
-Como lo muestra la Figura (\ref{fig:fast_dpp}), en cada iteración de una época, se extrae de manera uniforme, un conjunto inicial de cardinalidad $M < 500$ del cual se samplea posteriormente el \textit{mini-batch} de tamaño $k < 128$ haciendo uso del DPP, lo elementos no utilizados se eliminan del conjunto de entrenamiento. La razón por la cual se realiza esta primera selección, es la de reducir el coste de sampling de un DPP y según el parámetro $M$, controlar la cantidad de iteraciones que el algoritmo realiza en la época (a mayor $M$ menos iteraciones por época pero menor será la cantidad de ejemplos visitados y mayor será el tiempo de sampling del DPP).   
+Como lo muestra la Figura \ref{fig:fast_dpp}, en cada iteración de una época, se extrae de manera uniforme, un conjunto inicial de cardinalidad $M < 500$ del cual se samplea posteriormente el \textit{mini-batch} de tamaño $k < 128$ haciendo uso del DPP, lo elementos no utilizados se eliminan del conjunto de entrenamiento. La razón por la cual se realiza esta primera selección, es la de reducir el coste de sampling de un DPP y según el parámetro $M$, controlar la cantidad de iteraciones que el algoritmo realiza en la época (a mayor $M$ menos iteraciones por época pero menor será la cantidad de ejemplos visitados y mayor será el tiempo de sampling del DPP).   
 
 \vspace{0.2cm}
 
-Notar que si bien podrían eliminarse del conjunto de entrenamiento únicamente los ejemplos utilizados en el \textit{mini-batch} (y no $M$ completamente), nuestro objetivo es el de acelerar el entrenamiento de la red mediante la omisión de ejemplos ``redundantes'' según el DPP, vale decir, asumir que el \textit{mini-batch} ``resume'' la información contenida en el conjunto $M$.
+Notar que si bien podrían eliminarse del conjunto de entrenamiento únicamente los ejemplos utilizados en el \textit{mini-batch} (y no los $M$ muestreados), nuestro objetivo es el de acelerar el entrenamiento de la red mediante la omisión de ejemplos ``redundantes'' según el DPP, vale decir, asumir que el \textit{mini-batch} ``resume'' la información contenida en el conjunto muestreado inicialmente.
 
 \begin{algorithm}
 \caption{Fast DPP Training por época} \label{alg:alg4}
@@ -255,7 +255,7 @@ El objetivo de esta configuración es el de permitir que el DPP samplee con mayo
 
 \subsection{Clasificación Multiclase - Alta Dimensionalidad}
 
-El dataset de clasificación multiclase \textit{Fashion MNIST} en Figura (\ref{fig:fashion_mnist}) abarca el problema de clasificación multiclase (10 clases) de distintas prendas de ropa. 
+El dataset de clasificación multiclase \textit{Fashion MNIST} en Figura \ref{fig:fashion_mnist} abarca el problema de clasificación multiclase (10 clases) de distintas prendas de ropa. 
 
 \begin{figure}[ht]
     \centering
@@ -266,7 +266,7 @@ El dataset de clasificación multiclase \textit{Fashion MNIST} en Figura (\ref{f
 
 \vspace{0.2cm}
 
-Notar que al igual que en el dataset anterior, dentro de una misma clase es posible encontrar distintos ``clusters'' correspondiente a la misma prenda de ropa pero con diferencias sustanciales (\ref{fig:fashion_mnist_label_3}).
+Notar que al igual que en el dataset anterior, dentro de una misma clase es posible encontrar distintos ``clusters'' correspondiente a la misma prenda de ropa pero con diferencias sustanciales en Figura \ref{fig:fashion_mnist_label_3}.
 
 \vspace{0.2CM}
 
@@ -277,7 +277,7 @@ Notar que al igual que en el dataset anterior, dentro de una misma clase es posi
     \label{fig:fashion_mnist_label_3}
 \end{figure}
 
-Con el fin de agregar complejidad al problema, se utilizará una versión desbalanceada del dataset como la muestra (\ref{table:fashion_mnist}).
+Con el fin de agregar complejidad al problema, se utilizará una versión desbalanceada del dataset como la muestra la Tabla \ref{table:fashion_mnist}.
 
 \begin{table}[ht]
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
@@ -327,11 +327,11 @@ Se describen a continuación, el detalle de cada una de las arquitecturas de las
 \begin{figure}[ht]
     \centering
     \includegraphics[width=15cm]{img/tesis/conv.drawio.png}
-    \caption{Baseline Clasificación Multiclase: Esta arquitectura se utiliza como base para realizar comparaciones de las metodologías propuestas en los problemas de clasificación multiclase.}
+    \caption{Baseline Clasificación Multiclase: Esta arquitectura se utiliza como base para realizar comparaciones de las metodologías propuestas en los problemas de clasificación multiclase (Creado con \href{http://alexlenail.me/NN-SVG/LeNet.html}{NN-SVG} de Alex Lenail).}
     \label{fig:conv}
 \end{figure}
 
-Las Figuras \ref{fig:baseline_2d} y \ref{fig:conv} muestran la arquitectura sobre la cual se comparan los métodos propuestos para los problemas de clasificación binaria y multiclase con \textit{Fashion MNIST}. Los parámetros de entrenamiento de ambas se detallan en \ref{table:baseline2d_parameters} y \ref{table:conv_parameters} respectivamente. 
+Las Figuras \ref{fig:baseline_2d} y \ref{fig:conv} muestran la arquitectura sobre la cual se comparan los métodos propuestos para los problemas de clasificación binaria y multiclase con \textit{Fashion MNIST}. Los parámetros de entrenamiento de ambas se detallan en Tabla \ref{table:baseline2d_parameters} y Tabla \ref{table:conv_parameters} respectivamente. 
 
 \subsection{Autoencoder}
 
@@ -342,7 +342,7 @@ Las Figuras \ref{fig:baseline_2d} y \ref{fig:conv} muestran la arquitectura sobr
     \label{fig:autoencoder_arquitectura}
 \end{figure}
 
-La Figura \ref{fig:autoencoder_arquitectura} muestra la arquitectura que se utilizará para el entrenamiento del \textit{Autoencoder} utilizado para la reducción de dimensionalidad de las imágenes de \textit{Fashion MNIST}. Los parámetros en los distintos experimentos se detallan en \ref{table:autoencoder_parameters}.
+La Figura \ref{fig:autoencoder_arquitectura} muestra la arquitectura que se utilizará para el entrenamiento del \textit{Autoencoder} utilizado para la reducción de dimensionalidad de las imágenes de \textit{Fashion MNIST}. Los parámetros en los distintos experimentos se detallan en Tabla \ref{table:autoencoder_parameters}.
 
 \subsection{Oneshot}
 
@@ -353,12 +353,11 @@ La Figura \ref{fig:autoencoder_arquitectura} muestra la arquitectura que se util
     \label{fig:oneshot_arquitectura}
 \end{figure}
 
-
-La Figura \ref{fig:oneshot_arquitectura} muestra la arquitectura que se utilizará para el entrenamiento de la red siamesa \textit{Oneshot} que define una métrica de distancia entre pares de ejemplos de \textit{Fashion MNIST}. El entrenamiento se realiza utilizando \textit{contrastive loss} y los parámetros utilizados en los distintos experimentos se detallan en \ref{table:oneshot_parameters}.
+La Figura \ref{fig:oneshot_arquitectura} muestra la arquitectura que se utilizará para el entrenamiento de la red siamesa \textit{Oneshot} que define una métrica de distancia entre pares de ejemplos de \textit{Fashion MNIST}. El entrenamiento se realiza utilizando \textit{contrastive loss} y los parámetros utilizados en los distintos experimentos se detallan en Tabla \ref{table:oneshot_parameters}.
 
 \subsection{DPP NET}
 
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
     \includegraphics[width=12cm]{img/tesis/baseline_dppnet.png}
     \caption{Baseline y DPP NET: Esta figura muestra la arquitectura del baseline con el que se compararán los resultados de DPP NET.}
