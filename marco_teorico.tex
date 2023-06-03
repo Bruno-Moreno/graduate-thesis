@@ -13,7 +13,7 @@ Existen múltiples procesos puntuales entre los que podemos destacar los proceso
 
 \subsection{Procesos Puntuales Determinantales}
 
-Los Procesos Puntuales Determinantales, desde ahora DPP, son modelos probabilísticos de repulsión (procesos repulsivos) que surgen naturalmente en mecánica cuántica y en teoría de matrices aleatorias y que, a diferencia de otros modelos utilizados como \textit{Markov Random Fields}, estos proveen algoritmos eficientes y exactos para samplear, marginalizar, condicionar, entre otras tareas de inferencia. \cite{Kulesza_2012}
+Los Procesos Puntuales Determinantales, desde ahora DPP, son modelos probabilísticos de repulsión (procesos repulsivos) que surgen naturalmente en mecánica cuántica y en teoría de matrices aleatorias y que, a diferencia de otros modelos utilizados como \textit{Markov Random Fields}, estos proveen algoritmos eficientes y exactos para samplear, marginalizar, condicionar, entre otras tareas de inferencia \cite{Kulesza_2012}.
 
 
 \subsubsection{Definición }
@@ -22,7 +22,7 @@ De manera formal, un DPP es un proceso puntual estocástico cuya distribución d
 \[ (\forall A \subseteq \mathcal{Y}): \mathcal{P}(A \subseteq Y) = \det(K_A) ,  \]
 entonces diremos que $Y \sim DPP(\mathcal{Y})$. Aquí, $K_A$ es la restricción a las columnas definidas por el conjunto $A$ de una matriz $K \in \mathcal{M}_{N \times N} (\mathbb{R})$ definida positiva, simétrica y a valores propios acotados por 1 cuya indexación está definida por $\mathcal{Y}$ y se le conoce como kernel marginal. Una observación sencilla es que si $A = \{i\}$ un singleton, entonces 
 \[ \mathcal{P}(i \in Y) = K_{ii} ,  \]
-y por tanto, las diagonales con números cercanos a 1, corresponden a elementos que pueden ser seleccionados con alta probabilidad. Por otro lado, si $A = \{i,j\}$, entonces
+y por tanto, las diagonales con números cercanos a 1 corresponden a elementos que pueden ser seleccionados con alta probabilidad. Por otro lado, si $A = \{i,j\}$, entonces
 	\[
 	\mathcal{P}(i,j \in Y) = \begin{vmatrix}
     K_{ii} & K_{ij} \\ 
@@ -105,7 +105,7 @@ $\{(v_n , \lambda_n)\}_{n}$ de $L$
 \begin{figure}[ht]
     \centering
     \includegraphics[width=12cm]{img/tesis/DPP_sampling.png}
-    \caption{Muestreo de un DPP en una y dos dimensiones. Cada ejemplo sampleado disminuye la probabilidad de muestrear otro en una vecindad cercana (Kulesza 2012).}
+    \caption{Muestreo de un DPP en una y dos dimensiones. Cada ejemplo sampleado disminuye la probabilidad de muestrear otro en una vecindad cercana (Kulesza 2012)}
     \label{fig:example}
 \end{figure}
 
@@ -162,8 +162,8 @@ $\{(\hat{v}_n , \lambda_n)\}_{n}$ de C
 
 \subsubsection{k-DPP}
 
-Un proceso puntual determinantal (DPP) asigna una probabilidad a cada subconjunto de $\mathcal{Y}$, es decir, eventualmente puede que un sampleo de este proceso sea un conjunto vacio o incluso todo $\mathcal{Y}$. Con el objetivo de fijar la cardinalidad $k$ del sampling, se puede modificar el Algoritmo \ref{alg:alg2} para samplear exactamente $k$ vectores propios forzando la cardinalidad de $J$. 
-El algoritmo que realiza este proceso, no será detallado, pero es asintóticamente tan rápido el aumentar en $N$ como lo es samplear de un DPP común. 
+Un proceso puntual determinantal (DPP) asigna una probabilidad a cada subconjunto de $\mathcal{Y}$, es decir, eventualmente puede que un sampleo de este proceso sea un conjunto vacío o incluso todo $\mathcal{Y}$. Con el objetivo de fijar la cardinalidad $k$ del sampling, se puede modificar el Algoritmo \ref{alg:alg2} para samplear exactamente $k$ vectores propios forzando la cardinalidad de $J$. 
+El algoritmo que realiza este proceso es asintóticamente tan rápido conforme crece el $N$ como lo es samplear de un DPP común, sin embargo, no será detallado en esta tesis. 
 
 \subsection{Poisson Disk Sampling}
 
@@ -229,7 +229,7 @@ Una red neuronal artificial es un modelo de aprendizaje de máquinas inspirado e
 
 \vspace{0.2cm}
 
-La unidad fundamental de una red neuronal es el Perceptrón (\ref{fig:perceptron}), que es simplemente una función matemática que se encarga de tomar un \textit{input} $x = (x_1 , \dots , x_n) \in \mathbb{R}^n$  y multiplicarlo con un vector de pesos $w = (w_1 , \dots , w_n) \in \mathbb{R}^n$ mediante
+La unidad fundamental de una red neuronal es el Perceptrón (Figura \ref{fig:perceptron}), que es simplemente una función matemática que se encarga de tomar un \textit{input} $x = (x_1 , \dots , x_n) \in \mathbb{R}^n$  y multiplicarlo con un vector de pesos $w = (w_1 , \dots , w_n) \in \mathbb{R}^n$ mediante
 
 \[
 \hat{y} = f(x^{\top}w) , 
@@ -238,7 +238,7 @@ donde $f: \mathbb{R} \rightarrow \mathbb{R}$ es una función usualmente no linea
 
 \vspace{0.2cm}
 
-Los modelos más comunes de redes neuronales se conocen como \textit{feedforward neural networks} (FFNN) o \textit{multilayer perceptrons} (MLPs) y están compuestos por múltiples perceptrones interconectados en una estructura de capas como lo muestra la Figura \ref{fig:MLPs}
+Los modelos más comunes de redes neuronales se conocen como \textit{feedforward neural networks} (FFNN) o \textit{multilayer perceptrons} (MLPs) y están compuestos por múltiples perceptrones interconectados en una estructura de capas como lo muestra la Figura \ref{fig:MLPs}.
 
 \begin{figure}[ht]
     \centering
@@ -247,7 +247,7 @@ Los modelos más comunes de redes neuronales se conocen como \textit{feedforward
     \label{fig:MLPs}
 \end{figure}
 
-\noindent el \textit{output} de cada capa $h^{(k)} = (h^{(k)}_1 , h^{(k)}_2 , \dots , h^{(k)}_{w(k)})$ con $w(k)$ el ancho (cantidad de neuronas) de la capa $k$, se puede describir mediante 
+El \textit{output} de cada capa $h^{(k)} = (h^{(k)}_1 , h^{(k)}_2 , \dots , h^{(k)}_{w(k)})$ con $w(k)$ el ancho (cantidad de neuronas) de la capa $k$, se puede describir mediante 
 \[
 h^{(k)} = f^{(k)}(h^{(k-1)}W^{(k)}  + b^{(k)} ), \quad \forall k \in \{ 1 , \dots , l \} , \quad h^{(0)} = x ,   
 \]
@@ -277,7 +277,7 @@ Entre los algoritmos utilizados para la minimización de la función de error $l
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=10cm]{img/tesis/SGD.png}
+    \includegraphics[width=9cm]{img/tesis/SGD.png}
     \caption{Representación de distintos tipos de descensos del gradiente según el tamaño del \textit{Batch} (Wash 2022) \cite{GradientDescent}.}
     \label{fig:SGD}
 \end{figure}
@@ -294,7 +294,7 @@ El objetivo es minimizar el error esperado sobre la distribución generada de lo
 \[
 J(\theta) = \mathbb{E}_{(x,y) \sim \hat{p}_{\text{data}}} l(f(x , \theta),y) = \frac{1}{k}\sum_{i=1}^{k}l(f(x_i , \theta),y_i) , 
 \]
-es decir, el promedio de los errores para un \textit{batch} de tamaño $k$, notar que en esta segunda expresión, los datos fueron generados por una distribución $\hat{p}_{\text{data}}$ a priori distinta de $p_{\text{data}}$. 
+es decir, el promedio de los errores para un \textit{batch} de tamaño $k$. Notar que en esta segunda expresión, los datos fueron generados por una distribución $\hat{p}_{\text{data}}$ a priori distinta de $p_{\text{data}}$. 
 
 \subsubsection{Descenso del Gradiente Estocástico: Mini-Batch}
 
@@ -304,7 +304,7 @@ Con la función a minimizar $J(\theta)$ definida, la actualización de los pará
 \]
 donde $B \subset \{1 , \dots , N\}$ es el conjunto de índices del \textit{mini-batch} sampleado según $\mathcal{P}$, normalmente de manera uniforme entre todo el conjunto de entrenamiento que no ha sido visto previamente y $\rho_t$ la tasa de aprendizaje (\textit{learning rate}) del algoritmo en el instante $t$. 
 
-\subsubsection{Épocas de entrenamiento}
+\subsubsection{Épocas de Entrenamiento}
 
 En el contexto del \textit{Deep Learning}, las épocas se definen como ciclos de entrenamiento en el que se recorre completamente un conjunto de datos iterando a través de \textit{batchs}. Una mayor cantidad de épocas permite que los modelos aprendan de manera gradual el conjunto sobre el cual se esta entrenando, pero también deben estar acotadas a un número máximo para prevenir el \textit{overfitting} (el sobreajuste no permite generalizar a datos no vistos anteriormente). La elección correcta de las épocas va a depender de la complejidad de los datos, la arquitectura de la red y las características del problema a resolver. 
 
@@ -337,6 +337,8 @@ Este tipo de red, que si bien su estructura podría ser del tipo FFNN o CNN, no 
 \subsection{One Shot Learning}
 
 \textit{One Shot Learning} o (\textit{Few Shot Learning}) es un método de aprendizaje de máquinas utilizado comúnmente en el área de visión computacional y que busca reducir drásticamente la cantidad de ejemplos necesarios para clasificar objetos \cite{OMAHONY2019186}.
+
+\vspace{0.2cm}
 
 \begin{figure}[ht]
     \centering

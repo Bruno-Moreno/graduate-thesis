@@ -95,7 +95,23 @@ Departamento de Ingeniería Matemática}
 
 \begin{abstractd}
 
-Se proponen tres metodologías para el entrenamiento de redes neuronales utilizando un proceso repulsivo conocido como Proceso Puntual Determinantal (DPP) cuya función es la de permitir que los \textit{mini batch} sampleados en cada iteración del entrenamiento tengan la mayor diversidad posible según alguna métrica de distancia. Esta métrica es definida como una distancia euclidiana aplicada sobre una representación de baja dimensionalidad de los datos obtenida a partir del entrenamiento previo de un \textit{Autoencoder} o una red \textit{Oneshot}. La primera arquitectura denominada \textit{Fast DPP} resuelve el problema del alto costo computacional que requiere utilizar un DPP filtrando aquellos ejemplos poco relevantes. La segunda arquitectura, \textit{Mixed DPP}, combina el entrenamiento estándar (sampleo uniforme) con una inicialización mediante \textit{Fast DPP}. Finalmente, la tercera arquitectura plantea el entrenamiento en paralelo de un \textit{Autoencoder} necesario para la definición de la métrica y la red encargada de resolver el problema principal. Se prueban las arquitecturas en un problema de clasificación binaria con un \textit{dataset} artificial en dos dimensiones y uno de clasificación multiclase con \textit{Fashion MNIST}. Los resultados muestran que la red \textit{Fast DPP} tiene un mejor rendimiento en los primeros 30 segundos de entrenamiento que un método estándar (\textit{baseline}) en el problema de clasificación multiclase y la red \textit{Mixed DPP} alcanza un rendimiento similar al método estándar pero en menor tiempo. La importancia de este trabajo radica en la apertura de nuevas posibilidades de entrenamiento con sampleo activo mediante un proceso repulsivo tan estudiado como los DPP y además, aporta en el estudio de métricas de distancia en problemas de alta dimensionalidad con un enfoque en el entrenamiento de redes neuronales.
+El aprendizaje profundo o \textit{Deep Learning} es una de las ramas del aprendizaje de máquinas que más desarrollo y mejoras ha tenido en las últimas décadas. Los constantes esfuerzos de la comunidad de \textit{Machine Learning} por mejorar las técnicas de entrenamiento han abierto al paso a la utilización de herramientas cada vez más complejas y sofisticadas.
+
+\vspace{0.2cm}
+
+En linea con lo anterior, esta tesis propone la utilización de tres metodologías para el entrenamiento de redes neuronales utilizando un proceso repulsivo conocido como Proceso Puntual Determinantal (DPP) cuya función es la de permitir que los \textit{mini batch} sampleados en cada iteración del entrenamiento tengan la mayor diversidad posible según alguna métrica de distancia. Esta métrica es definida como una distancia euclidiana aplicada sobre una representación de baja dimensionalidad de los datos obtenida a partir del entrenamiento previo de un \textit{Autoencoder} o una red \textit{Oneshot}. 
+
+\vspace{0.2cm}
+
+La primera arquitectura denominada \textit{Fast DPP} resuelve el problema del alto costo computacional que requiere utilizar un DPP filtrando aquellos ejemplos poco relevantes. La segunda arquitectura, \textit{Mixed DPP}, combina el entrenamiento estándar (sampleo uniforme) con una inicialización mediante \textit{Fast DPP}. Finalmente, la tercera arquitectura plantea el entrenamiento en paralelo de un \textit{Autoencoder} necesario para la definición de la métrica y la red encargada de resolver el problema principal.
+
+\vspace{0.2cm}
+
+Se prueban las arquitecturas en un problema de clasificación binaria con un \textit{dataset} artificial en dos dimensiones y uno de clasificación multiclase con \textit{Fashion MNIST}. Los resultados muestran que la red \textit{Fast DPP} tiene un mejor rendimiento en los primeros 30 segundos de entrenamiento que un método estándar (\textit{baseline}) en el problema de clasificación multiclase y la red \textit{Mixed DPP} alcanza un rendimiento similar al método estándar pero en menor tiempo. 
+
+\vspace{0.2cm}
+
+La importancia de este trabajo radica en la apertura de nuevas posibilidades de entrenamiento con sampleo activo mediante un proceso repulsivo tan estudiado como los DPP y además, aporta en el estudio de métricas de distancia en problemas de alta dimensionalidad con un enfoque en el entrenamiento de redes neuronales.
 
 \end{abstractd}
 

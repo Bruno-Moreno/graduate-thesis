@@ -1,6 +1,6 @@
 \section{Motivación}
 
-El aprendizaje profundo o \textit{Deep Learning} es una de las ramas del aprendizaje de máquinas que más desarrollo y mejoras han tenido en las últimas décadas y no solo por los avances en \textit{hardware} que permite el entrenamiento de redes más profundas y complejas, sino que también por los constantes esfuerzos de la comunidad de \textit{Machine Learning} en probar técnicas más sofisticadas en el entrenamiento y construcción de estas redes.
+El aprendizaje profundo o \textit{Deep Learning} es una de las ramas del aprendizaje de máquinas que más desarrollo y mejoras ha tenido en las últimas décadas y no solo por los avances en \textit{hardware} que permite el entrenamiento de redes más profundas y complejas, sino que también por los constantes esfuerzos de la comunidad de \textit{Machine Learning} en probar técnicas más sofisticadas en el entrenamiento y construcción de estas redes.
 
 \vspace{0.2cm}
 
@@ -41,13 +41,13 @@ Las hipótesis de este trabajo son:
 
 \section{Objetivos Generales}
 
-El objetivo general de esta tesis es el de desarrollar un algoritmo de selección de \textit{batches} que utilice un proceso puntual determinantal para el entrenamiento de una red neuronal mientras que se resuelve el problema del alto costo computacional y la selección de la métrica de distancia adecuada al tipo de problema.
+El objetivo general de esta tesis es desarrollar un algoritmo de selección de \textit{batches} que utilice un proceso puntual determinantal para el entrenamiento de una red neuronal mientras que se resuelve el problema del alto costo computacional y la selección de la métrica de distancia adecuada al tipo de problema.
 
 
 \section{Objetivos Particulares}
 
 \begin{itemize}
-    \item Creación de arquitecturas que realicen el entrenamiento de una red neuronal sin utilizar todos los datos y que implementen un proceso puntual determinantal para la selección de \textit{batches}.
+    \item Crear arquitecturas que realicen el entrenamiento de una red neuronal sin utilizar todos los datos y que implementen un proceso puntual determinantal para la selección de \textit{batches}.
     
     \item Comparar distintas métricas de distancia definidas sobre el conjunto de entrenamiento y su efecto como medida diversidad para el proceso puntual determinantal. 
 
@@ -65,7 +65,7 @@ Las contribuciones de este trabajo se pueden resumir como:
 \begin{itemize}
     \item Se proponen 3 arquitecturas alternativas a las clásicas que admiten el uso de un proceso puntual determinantal para la selección de batches representativos y tal que su entrenamiento se realiza sin utilizar todos los datos. Se muestra experimentalmente que una de ellas, \textit{Mixed DPP}, supera el rendimiento de una red convencional (con SGD sin selección activa de \textit{batches}) en un dataset de alta dimensionalidad y alto coste de procesamiento (\textit{Fashion MNIST}). 
  
-    \item Se proponen y discuten distintas alternativas de métricas de distancia que pueden ser utilizadas para samplear con un proceso repulsivo y cómo algunas de ellas pueden ser transversales a problemas con distintos tipos de datos. 
+    \item Se proponen y discuten distintas alternativas de métricas de distancia que pueden ser utilizadas para samplear con un proceso repulsivo y cómo algunas de ellas son transversales a problemas con distintos tipos de datos. 
 
     \item Se establece una guía para continuar el desarrollo de esta tesis mediante espacios de mejora, ya sea en optimización de los algoritmos presentados, propuestas de métricas de distancia y esquemas de entrenamiento.
 

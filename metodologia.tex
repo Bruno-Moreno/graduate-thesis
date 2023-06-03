@@ -96,7 +96,7 @@ Ambas estrategias Algoritmo \ref{alg:alg5} y Algoritmo \ref{alg:alg6} son más r
 
 \subsection{DPP NET}
 
-Este modelo propuesto intenta solucionar el problema de la definición de la métrica de similitud necesaria para samplear un DPP mientras se entrena en simultaneo la red que se encarga del problema de clasificación. 
+Este modelo propuesto intenta solucionar el problema de la definición de la métrica de similitud necesaria para samplear un DPP mientras se entrena en simultáneo la red que se encarga del problema de clasificación. 
 
 \begin{figure}[ht]
     \centering
@@ -107,7 +107,7 @@ Este modelo propuesto intenta solucionar el problema de la definición de la mé
 
 \vspace{0.2cm}
 
-La red se compone principalmente de un \textit{Autoencoder} y una \textit{fully connected} (FC) o una red convolucional (CNN). La sección del \textit{Encoder} junto a la FC (o CNN), se encargan de realizar la predicción de la etiqueta del problema de clasificación. Por otro lado, el \textit{Autoencoder} en simultaneo, estima una representación de menor dimensionalidad del \textit{input} que servirá para los futuros muestreos del DPP con el uso de una distancia euclidiana. Para entrenar la red, se utiliza la siguiente función de \textit{loss}
+La red se compone principalmente de un \textit{Autoencoder} y una \textit{fully connected} (FC) o una red convolucional (CNN). La sección del \textit{Encoder} junto a la FC (o CNN), se encargan de realizar la predicción de la etiqueta del problema de clasificación. Por otro lado, el \textit{Autoencoder} en simultáneo, estima una representación de menor dimensionalidad del \textit{input} que servirá para los futuros muestreos del DPP con el uso de una distancia euclidiana. Para entrenar la red, se utiliza la siguiente función de \textit{loss}
 
 \[
 \mathcal{L} = \alpha\mathcal{L}_A(\hat{x},x) + (1-\alpha)\mathcal{L}_{CNN}(\hat{y},y) , 
@@ -200,7 +200,7 @@ notar que si bien no cumple con la desigualdad triangular, esta métrica es de u
 
 \subsection{Autoencoder: Representación Latente}
 
-La utilización de un \textit{Autoencoder} resulta de gran utilidad para definir una métrica de distancia que no dependa en gran medida del tipo de datos con los que se trabaja. Al obtener la representación de baja dimensionalidad de los datos, la distancia euclidiana o coseno representan de manera fidedigna la similitud de los datos y por tanto pueden ser utilizados por el DPP. De manera formal 
+La utilización de un \textit{Autoencoder} resulta de gran utilidad para definir una métrica de distancia que no dependa en gran medida del tipo de datos con los que se trabaja. Al obtener la representación de baja dimensionalidad de los datos, la distancia euclidiana y la distancia coseno representan de manera fidedigna la similitud de los datos y por tanto pueden ser utilizados por el DPP. De manera formal 
 
 \[
 d_{auto} = || \text{encoder}(x) - \text{encoder}(y) ||_2 .
@@ -255,7 +255,7 @@ El objetivo de esta configuración es el de permitir que el DPP samplee con mayo
 
 \subsection{Clasificación Multiclase - Alta Dimensionalidad}
 
-El dataset de clasificación multiclase \textit{Fashion MNIST} en Figura \ref{fig:fashion_mnist} abarca el problema de clasificación multiclase (10 clases) de distintas prendas de ropa. 
+El dataset de clasificación multiclase \textit{Fashion MNIST} \cite{FashionMNIST} en Figura \ref{fig:fashion_mnist} abarca el problema de clasificación multiclase (10 clases) de distintas prendas de ropa. 
 
 \begin{figure}[ht]
     \centering
@@ -337,7 +337,7 @@ Las Figuras \ref{fig:baseline_2d} y \ref{fig:conv} muestran la arquitectura sobr
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=14cm]{img/tesis/autoencoder_arquitectura.png}
+    \includegraphics[width=12cm]{img/tesis/autoencoder_arquitectura.png}
     \caption{Autoencoder: Esta arquitectura se utiliza para obtener la representación de baja dimensionalidad de los datos.}
     \label{fig:autoencoder_arquitectura}
 \end{figure}
@@ -346,20 +346,22 @@ La Figura \ref{fig:autoencoder_arquitectura} muestra la arquitectura que se util
 
 \subsection{Oneshot}
 
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
-    \includegraphics[width=14cm]{img/tesis/oneshot_arquitectura.png}
+    \includegraphics[width=12cm]{img/tesis/oneshot_arquitectura.png}
     \caption{Oneshot: Esta arquitectura se utiliza para el aprendizaje de la métrica de distancia necesaria para un DPP.}
     \label{fig:oneshot_arquitectura}
 \end{figure}
 
 La Figura \ref{fig:oneshot_arquitectura} muestra la arquitectura que se utilizará para el entrenamiento de la red siamesa \textit{Oneshot} que define una métrica de distancia entre pares de ejemplos de \textit{Fashion MNIST}. El entrenamiento se realiza utilizando \textit{contrastive loss} y los parámetros utilizados en los distintos experimentos se detallan en Tabla \ref{table:oneshot_parameters}.
 
+\newpage 
+
 \subsection{DPP NET}
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=12cm]{img/tesis/baseline_dppnet.png}
+    \includegraphics[width=10cm]{img/tesis/baseline_dppnet.png}
     \caption{Baseline y DPP NET: Esta figura muestra la arquitectura del baseline con el que se compararán los resultados de DPP NET.}
     \label{fig:baseline_dpp_net}
 \end{figure}

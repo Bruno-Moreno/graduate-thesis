@@ -12,7 +12,7 @@ Por otro lado, en la selección de \textit{batches}, el artículo \textit{Online
  
 \vspace{0.2cm}
 
-Más específicamente, el algoritmo propuesto en \cite{https://doi.org/10.48550/arxiv.1511.06343}, ordena los $N$ elementos del conjunto de entrenamiento según su último gradiente computado $\psi_i(x)$ en sentido descendiente. En la próxima iteración, cada elemento del \textit{batch} se selecciona según una probabilidad $p_i$ definida como 
+Específicamente, el algoritmo propuesto en \cite{https://doi.org/10.48550/arxiv.1511.06343}, ordena los $N$ elementos del conjunto de entrenamiento según su último gradiente computado $\psi_i(x)$ en sentido descendiente. En la próxima iteración, cada elemento del \textit{batch} se selecciona según una probabilidad $p_i$ definida como 
 \[
 p_i = \frac{1/\exp(\log(s_e)/N)^{i}}{\sum_{k=1}^N 1/\exp(\log(s_e)/N)^{k}} ,
 \] donde $s_e$ es un parámetro del modelo denominado \textit{selection pressure}. Notar que $p_i$ sigue un decaimiento exponencial y que los elementos que más aportan al gradiente serán muestreados con una mayor probabilidad en la siguiente iteración. 
@@ -57,7 +57,7 @@ con $B$ sampleado a través de un proceso repulsivo $\mathcal{P}$. Entonces
 \] donde $g(x,\theta) = \grad l(f(x, \theta))$, $\lambda(x)$ la cantidad de puntos esperada alrededor de $x$, $\rho(x,y)$ la cantidad de puntos esperada alrededor de $x$ e $y$, $\nu \times \nu \subset \mathbb{R}^n \times \mathbb{R}^n$ la grilla considerada y $k = |B|$ el tamaño del \textit{mini-batch}.
 \end{teo}
 
-La demostración se incluye en el anexo (\hyperlink{Teorema B.4}{Teorema B.4}). Los 2 puntos importantes en este resultado son que 
+La demostración se incluye en el anexo (\hyperlink{Teorema B.4}{Teorema B.4}). Los 2 puntos importantes en este resultado son que:
 \begin{enumerate}
     \item El primer término de $\mathbb{V}ar(\hat{G})$ es negativo para cualquier proceso repulsivo.
     \item El primer término desaparece cuando se utiliza un método de sampleo uniforme (como en el SGD estándar) pues $\rho(x,y) = \lambda(x)\lambda(y)$. 

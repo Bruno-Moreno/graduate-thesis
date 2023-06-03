@@ -17,7 +17,7 @@ Los procesos puntuales determinantales permiten muestrear subconjuntos de datos 
 
 \end{images}
 
-Cuando se trabaja en un dataset de 2 dimensiones, la metrica euclidiana rescata perfectamente la distancia entre pares de ejemplos. La primera parte del experimento tiene como objetivo mostrar la diferencia entre un sampling uniforme y un sampling mediante un DPP en 2 dimensiones. Como se puede ver en la Figura \ref{fig:sampling} (a), un método uniforme samplea en función del desbalance del dataset $\frac{C_0}{C_1} = 1/2$, en este caso 13 elementos de la clase 0 y 19 de la clase 1. Por otro lado, al samplear mediante un DPP en Figura \ref{fig:sampling} (b), se asigna una menor probabilidad a muestrear puntos que se encuentren espacialmente cercanos, por lo que no se espera una alta densidad en $C_1$ como en el caso uniforme. El experimento efectivamente comprueba este resultado, pues se obtienen 16 puntos para la clase 0 y 16 puntos en la clase 1.
+Cuando se trabaja en un dataset de 2 dimensiones, la métrica euclidiana rescata perfectamente la distancia entre pares de ejemplos. La primera parte del experimento tiene como objetivo mostrar la diferencia entre un sampling uniforme y un sampling mediante un DPP en 2 dimensiones. Como se puede ver en la Figura \ref{fig:sampling} (a), un método uniforme samplea en función del desbalance del dataset $\frac{C_0}{C_1} = 1/2$, en este caso 13 elementos de la clase 0 y 19 de la clase 1. Por otro lado, al samplear mediante un DPP en Figura \ref{fig:sampling} (b), se asigna una menor probabilidad a muestrear puntos que se encuentren espacialmente cercanos, por lo que no se espera una alta densidad en $C_1$ como en el caso uniforme. El experimento efectivamente comprueba este resultado, pues se obtienen 16 puntos para la clase 0 y 16 puntos en la clase 1.
 
 \vspace{0.2cm}
 
@@ -28,7 +28,7 @@ Cuando se trabaja en un dataset de 2 dimensiones, la metrica euclidiana rescata 
     \label{fig:proporcion_sampling}
 \end{figure}
 
-Iterando el ejercicio una mayor cantidad de veces ($n=100$) y promediando sus resultados se obtiene Figura \ref{fig:proporcion_sampling}. Como se puede ver en esta figura, el método uniforme en promedio samplea en función del desbalance del dataset (barras azules) y con una alta varianza. En cambio, el sampleo con un DPP (barras naranjas) muestrea de manera más homogénea, cercano a la proporción 1:1 entre clases y con una menor varianza. 
+Iterando el ejercicio una mayor cantidad de veces ($n=100$) y promediando sus resultados se obtiene la Figura \ref{fig:proporcion_sampling}. Como se puede ver en esta figura, el método uniforme en promedio samplea en función del desbalance del dataset (barras azules) y con una alta varianza. En cambio, el sampleo con un DPP (barras naranjas) muestrea de manera más homogénea, cercano a la proporción 1:1 entre clases y con una menor varianza. 
 
 \vspace{0.2cm}
 
@@ -57,7 +57,7 @@ Para el aprendizaje de la métrica de distancia basados en el \textit{Autoencode
 
 \end{images}
 
-Como se aprecia en Figura \ref{fig:umap_representation} la técnica UMAP calculada sobre la representación entregada por la red \textit{Oneshot} (a) y  \textit{Autoencoder} (b) permite verificar que las clases se encuentran correctamente separadas (diferencias entre-clases, visualmente mejor en (a)) y que por sobre todo, existen ``clusters'' dentro de una misma clase (diferencias intra-clase) que el DPP permitiría representar. No se utilizará esta representación \textit{UMAP} para los experimentos pero está dentro de los trabajos a realizar en el futuro. 
+Como se aprecia en Figura \ref{fig:umap_representation} la técnica UMAP calculada sobre la representación entregada por la red \textit{Oneshot} (Figura \ref{fig:umap_representation} (a)) y  \textit{Autoencoder} (Figura \ref{fig:umap_representation} (b)) permite verificar que las clases se encuentran correctamente separadas (diferencias entre-clases, visualmente mejor en Figura \ref{fig:umap_representation} (a)) y que por sobre todo, existen ``clusters'' dentro de una misma clase (diferencias intra-clase) que el DPP permitiría representar. No se utilizará esta representación \textit{UMAP} para los experimentos pero está dentro de los trabajos a realizar en el futuro. 
 
 \begin{figure}[ht]
     \centering
@@ -114,7 +114,7 @@ Las Figuras \ref{fig:baseline_it_n} y \ref{fig:dpp_it_n} muestran las primeras 3
 
 \end{images}
 
-Si no descartamos ejemplos como lo propone \textit{Fast DPP}, es decir, descartar únicamente los ejemplos muestreados en cada \textit{mini batch} y no los $M$ que se proponen, las últimas iteraciones del algoritmo serían como lo muestra la Figura \ref{fig:ambas_it_n} (b) pues el conjunto del cual samplear es reducido y los ejemplos de la clase minoritaria ya fueron muestreados en su totalidad. Por otro lado, los rendimientos de ambos modelos (a) y (b) son bastante parecidos pues ambos observarían todos los ejemplos del dataset y no habría mayor diferencia (salvo en el tiempo de entrenamiento). 
+Si no descartamos ejemplos como lo propone \textit{Fast DPP}, es decir, descartar únicamente los ejemplos muestreados en cada \textit{mini batch} y no los $M$ que se proponen, las últimas iteraciones del algoritmo serían como lo muestra la Figura \ref{fig:ambas_it_n} (b) pues el conjunto del cual samplear es reducido y los ejemplos de la clase minoritaria ya fueron muestreados en su totalidad. Por otro lado, los rendimientos de ambos modelos en Figura \ref{fig:ambas_it_n} son bastante parecidos pues ambos observarían todos los ejemplos del dataset y no habría mayor diferencia (salvo en el tiempo de entrenamiento). 
 
 \vspace{0.2cm}
 
@@ -127,7 +127,7 @@ Lo anterior justifica la utilización del algoritmo \textit{Fast DPP} que hace u
 
 \end{images}
 
-Con respecto al entrenamiento en 10 épocas con un tamaño de sampling inicial $M = 100$ (es decir, descartando $M-k = 100-64 = 36$ ejemplos en cada iteración con $k$ el tamaño del \textit{batch}), según la Figura \ref{fig:2d_fast_dpp} (a) y (b), es claro que el método \textit{baseline} es superior durante todo el entrenamiento al método \textit{Fast DPP} según la métrica de \textit{loss}. Lo anterior es un resultado esperable de un algoritmo que no mira todos los ejemplos pues su función es la de acelerar el entrenamiento, lamentablemente, esto tampoco es logrado como lo muestra (c) pues la arquitectura de la red es poco profunda y los datos con los que trabaja de baja dimensionalidad. En consecuencia, el costo base de utilizar un DPP es superior a la de usar todos los datos para el entrenamiento.  
+Con respecto al entrenamiento en 10 épocas con un tamaño de sampling inicial $M = 100$ (es decir, descartando $M-k = 100-64 = 36$ ejemplos en cada iteración con $k$ el tamaño del \textit{batch}), según la Figura \ref{fig:2d_fast_dpp} (a) y (b), es claro que el método \textit{baseline} es superior durante todo el entrenamiento al método \textit{Fast DPP} según la métrica de \textit{loss}. Lo anterior es un resultado esperable de un algoritmo que no mira todos los ejemplos pues su función es la de acelerar el entrenamiento, lamentablemente, esto tampoco es logrado como lo muestra Figura \ref{fig:2d_fast_dpp} (c) pues la arquitectura de la red es poco profunda y los datos con los que trabaja de baja dimensionalidad. En consecuencia, el costo base de utilizar un DPP es superior a la de usar todos los datos para el entrenamiento.  
 
 \vspace{0.2cm}
 
@@ -148,7 +148,7 @@ Lo que resulta interesante de este resultado es que la metodología utilizando \
 
 \section{Mixed DPP}
 
-En la Sección \ref{section:fast_dpp_experiment}, se muestra que durante los primeros 30 segundos del entrenamiento (5 épocas aproximadamente) de \textit{Fast DPP} para el problema de clasificación multiclase, la metodología \textit{DPP Autoencoder} superó en rendimiento al \textit{baseline} definido. Como nuestro objetivo es mejorar el tiempo y rendimiento de la red, se propone utilizar un esquema mixto de entrenamiento llamado \textit{Mixed DPP} (detallado en Alg \ref{alg:alg5}) donde vamos a considerar la época de cambio de estrategia $l_m = 5$.
+En la Sección \ref{section:fast_dpp_experiment}, se muestra que durante los primeros 30 segundos del entrenamiento (5 épocas aproximadamente) de \textit{Fast DPP} para el problema de clasificación multiclase, la metodología \textit{DPP Autoencoder} superó en rendimiento al \textit{baseline} definido. Como nuestro objetivo es mejorar el tiempo y rendimiento de la red, se propone utilizar un esquema mixto de entrenamiento llamado \textit{Mixed DPP} (detallado en Algoritmo \ref{alg:alg5}) donde vamos a considerar la época de cambio de estrategia $l_m = 5$.
 
 \vspace{0.2cm}
 
@@ -162,7 +162,7 @@ Sobre el dataset Tabla \ref{table:binaria} del problema de clasificación binari
 
 \end{images}
 
-En este problema, la metodología \textit{Fast DPP} no era de gran utilidad para disminuir el tiempo de entrenamiento pues los datos son de baja dimensionalidad y por tanto de tiempo de procesamiento reducido. Ahora bien, como es posible ver en \ref{fig:2d_mixed_dpp} (a) y (b), el rendimiento de la red \textit{Mixed DPP} en \textit{Train Loss} y \textit{Val Loss} es superior a partir de las 12 épocas con respecto al \textit{baseline} definido. 
+En este problema, la metodología \textit{Fast DPP} no era de gran utilidad para disminuir el tiempo de entrenamiento pues los datos son de baja dimensionalidad y por tanto de tiempo de procesamiento reducido. Ahora bien, como es posible ver en Figura \ref{fig:2d_mixed_dpp} (a) y (b), el rendimiento de la red \textit{Mixed DPP} en \textit{Train Loss} y \textit{Val Loss} es superior a partir de las 12 épocas con respecto al \textit{baseline} definido. 
 
 \vspace{0.2cm}
 
@@ -170,7 +170,7 @@ Este resultado es muy importante pues permitiría validar una de las hipótesis 
 
 \vspace{0.2cm}
 
-Según (c) el entrenamiento mediante \textit{Mixed DPP} (curva verde) toma un mayor tiempo en completar 50 épocas (5 segundos más aproximadamente) que el entrenamiento \textit{baseline} (curva azul) y por tanto, si buscamos un problema donde se pueda mostrar el valor que aporta \textit{Fast DPP}, es necesario trabajar con un problema de alta dimensionalidad. 
+Según Figura \ref{fig:2d_mixed_dpp} (c) el entrenamiento mediante \textit{Mixed DPP} (curva verde) toma un mayor tiempo en completar 50 épocas (5 segundos más aproximadamente) que el entrenamiento \textit{baseline} (curva azul) y por tanto, si buscamos un problema donde se pueda mostrar el valor que aporta \textit{Fast DPP}, es necesario trabajar con un problema de alta dimensionalidad. 
 
 \vspace{0.2cm}
 
@@ -184,11 +184,11 @@ Por otro lado, no se destacan resultados importantes en la red \textit{Reversed 
 \end{images}
 
 
-Al trabajar con el problema de clasificación multiclase \textit{Fashion MNIST}, se obtienen los resultados mostrados en \ref{fig:nd_mixed_dpp}. En este caso, el método \textit{baseline} es superior a los métodos \textit{Mixed DPP (Autoencoder)} y \textit{Mixed DPP (Oneshot)} en \textit{Train Loss} (a), ahora bien, con respecto al conjunto de validación, los resultados muestran que los 3 modelos tienen un rendimiento similar en \textit{Val Loss} (b) e incluso las metodologías propuestas son ligeramente mejores (quizás eventualmente reduciendo el \textit{overfitting}).
+Al trabajar con el problema de clasificación multiclase \textit{Fashion MNIST}, se obtienen los resultados mostrados en Figura \ref{fig:nd_mixed_dpp}. En este caso, el método \textit{baseline} es superior a los métodos \textit{Mixed DPP (Autoencoder)} y \textit{Mixed DPP (Oneshot)} en \textit{Train Loss} (Figura \ref{fig:nd_mixed_dpp} (a)), ahora bien, con respecto al conjunto de validación, los resultados muestran que los 3 modelos tienen un rendimiento similar en \textit{Val Loss} (Figura \ref{fig:nd_mixed_dpp} (b)) e incluso las metodologías propuestas son ligeramente mejores (quizás eventualmente reduciendo el \textit{overfitting}).
 
 \vspace{0.2cm}
 
-Un resultado relevante se da al analizar el tiempo de entrenamiento (c) de las distintas metodologías. Es claro que el rendimiento de ambas redes propuestas es superior al del \textit{baseline} alcanzando un resultado similar con una diferencia de hasta 100 segundos producto de la inicialización mediante \textit{Fast DPP}. El hecho de que ambas redes propuestas hayan podido tener este resultado valida la segunda hipótesis del Capítulo 1 que propone la utilización de representaciones de baja dimensionalidad (obtenidas a partir del entrenamiento de una red) para el aprendizaje de la métrica de distancia utilizada por el DPP. A su vez, este resultado indica que justamente un esquema mixto de entrenamiento bien ajustado supera el rendimiento de una metodología clásica SGD con sampling uniforme, tal y como conjeturamos en la primera hipótesis de la Sección 1. 
+Un resultado relevante se da al analizar el tiempo de entrenamiento en Figura \ref{fig:nd_mixed_dpp} (c) de las distintas metodologías. Es claro que el rendimiento de ambas redes propuestas es superior al del \textit{baseline} alcanzando un resultado similar con una diferencia de hasta 100 segundos producto de la inicialización mediante \textit{Fast DPP}. El hecho de que ambas redes propuestas hayan podido tener este resultado valida la segunda hipótesis del Capítulo 1 que propone la utilización de representaciones de baja dimensionalidad (obtenidas a partir del entrenamiento de una red) para el aprendizaje de la métrica de distancia utilizada por el DPP. A su vez, este resultado indica que justamente un esquema mixto de entrenamiento bien ajustado supera el rendimiento de una metodología clásica SGD con sampling uniforme, tal y como conjeturamos en la primera hipótesis de la Sección 1. 
 
 \vspace{0.2cm}
 
@@ -207,11 +207,11 @@ Por otro lado, los resultados de \textit{Reversed Mixed DPP} en la Figura \ref{f
 \end{images}
 
 
-Los resultados que hemos obtenido hasta ahora son dependientes del aprendizaje de la métrica mediante \textit{Oneshot} o aprendiendo una representación de baja dimensionalidad mediante un \textit{Autoencoder}. El tiempo de entrenamiento se reporta en \ref{fig:time_nd_metric}. Si bien este debería ser sumado al tiempo de entrenamiento en \ref{fig:nd_mixed_dpp} (c), para el caso de la métrica con \textit{Oneshot} (a) el resultado no cambia pero para el \textit{Autoencoder} (b) el resultado resulta equivalente a la metodología \textit{baseline}.
+Los resultados que hemos obtenido hasta ahora son dependientes del aprendizaje de la métrica mediante \textit{Oneshot} o aprendiendo una representación de baja dimensionalidad mediante un \textit{Autoencoder}. El tiempo de entrenamiento se reporta en Figura \ref{fig:time_nd_metric}. Si bien este debería ser sumado al tiempo de entrenamiento en Figura \ref{fig:nd_mixed_dpp} (c), para el caso de la métrica con \textit{Oneshot} (Figura \ref{fig:nd_mixed_dpp} (a)) el resultado no cambia pero para el \textit{Autoencoder} (Figura \ref{fig:nd_mixed_dpp} (b)) el resultado resulta equivalente a la metodología \textit{baseline}.
 
 \vspace{0.2cm}
 
-Este detalle puede ser tratado de múltiples formas, desde el uso de \textit{Autoencoders} o redes \textit{Oneshot} menos profundas (con el fin de reducir el tiempo de entrenamiento), la búsqueda de métricas que no dependan del entrenamiento de una red (como las distancias de \textit{Minkowski} discutidas en \ref{section:minkowski}) o la que se propone en el Algoritmo \ref{alg:alg7} que se denomina DPP NET cuyo objetivo es el de entrenar en paralelo la red encargada de obtener la representación mientras se resuelve el problema de clasificación utilizando un sampleo con DPP. La siguiente sección detalla los resultados obtenidos por esta red. 
+Este detalle puede ser tratado de múltiples formas, desde el uso de \textit{Autoencoders} o redes \textit{Oneshot} menos profundas (con el fin de reducir el tiempo de entrenamiento), la búsqueda de métricas que no dependan del entrenamiento de una red (como las distancias de \textit{Minkowski} discutidas en la Sección \ref{section:minkowski}) o la que se propone en el Algoritmo \ref{alg:alg7} que se denomina DPP NET cuyo objetivo es el de entrenar en paralelo la red encargada de obtener la representación mientras se resuelve el problema de clasificación utilizando un sampleo con DPP. La siguiente sección detalla los resultados obtenidos por esta red. 
 
 
 \section{DPP NET}
